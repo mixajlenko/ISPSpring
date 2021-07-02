@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+</head>
+<body style="zoom: 80%">
+<div class="slider-area">
+    <div class="slider-bgLogin text-center">
+        <div class="container">
+            <div class="row">
+                <div class="slidertext">
+                    <h1>
+                        Registration
+                    </h1>
+                    <br>
+                </div>
+                <div class="tableTariffs" id="registerForm">
+                    <div class="localRegistrationBlock">
+                        <a class="loginBtn" href="/">
+                            Login
+                        </a>
+                        <a class="loginBtn"
+                           href="/view/language/registration?language=RU">RU</a>
+                        <a class="loginBtn"
+                           href="/view/language/registration?language=EN">EN</a>
+                    </div>
+                    <form action="/registration" th:object="${userForm}" method="POST">
+                        <div>
+                            <label>First name</label>
+                            <input th:field="*{firstName}"/>
+                        </div>
+                        <div>
+                            <label>Second name</label>
+                            <input th:field="*{secondName}"/>
+                        </div>
+                        <div>
+                            <label>email</label>
+                            <input type="email" th:field="*{username}"/>
+                        </div>
+                        <div>
+                            <label>phone</label>
+                            <input type="text" th:field="*{phone}"/>
+                        </div>
+                        <div>
+                            <label>password</label>
+                            <input type="password" th:field="*{password}"/>
+                        </div>
+                        <button type="submit" th:text="Submit">submit</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
