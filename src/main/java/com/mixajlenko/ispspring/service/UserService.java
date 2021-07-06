@@ -3,6 +3,7 @@ package com.mixajlenko.ispspring.service;
 import com.mixajlenko.ispspring.entity.Role;
 import com.mixajlenko.ispspring.entity.Status;
 import com.mixajlenko.ispspring.entity.User;
+import com.mixajlenko.ispspring.repository.PaymentRepository;
 import com.mixajlenko.ispspring.repository.RoleRepository;
 import com.mixajlenko.ispspring.repository.StatusRepository;
 import com.mixajlenko.ispspring.repository.UserRepository;
@@ -30,6 +31,8 @@ public class UserService implements UserDetailsService {
     RoleRepository roleRepository;
     @Autowired
     StatusRepository statusRepository;
+    @Autowired
+    PaymentRepository paymentRepository;
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -60,7 +63,6 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        user.setWallet("0");
         user.setStatuses(Collections.singleton(new Status(1L,"STATUS_BLOCKED")));
         user.setRoles(Collections.singleton(new Role(1L,"ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

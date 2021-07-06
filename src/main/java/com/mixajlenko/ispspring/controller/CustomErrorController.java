@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class CustomErrorController implements ErrorController {
 
+
     public String getErrorPath() {
         return "/error";
     }

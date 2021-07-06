@@ -25,18 +25,18 @@
             <div class="mainmenu">
                 <ul>
                     <li><a class="scroll-animite btn"
-                           href="${pageContext.request.contextPath}/view/admin/mainPageAdmin">Main Page</a></li>
+                           href="/mainPageAdmin">Main Page</a></li>
                     <li><a class="scroll-animite btn"
-                           href="${pageContext.request.contextPath}/view/admin/servicePageAdmin">Services</a></li>
+                           href="/servicePageAdmin">Services</a></li>
                     <li><a class="scroll-animite btn"
-                           href="${pageContext.request.contextPath}/view/admin/userPageAdmin">Clients</a></li>
+                           href="/adminPage/userPageAdmin">Clients</a></li>
                     <li><a class="scroll-animite logOutBtn"
                            href="/logout">Log Out</a></li>
                 </ul>
             </div>
         </div>
         <div id="time"><span id="datetime"></span></div>
-        <script src="${pageContext.request.contextPath}/styles/js/time.js"></script>
+        <script type="text/javascript" th:src="@{/js/time.js}"></script>
 
     </header>
     <!-- Slider area Start -->

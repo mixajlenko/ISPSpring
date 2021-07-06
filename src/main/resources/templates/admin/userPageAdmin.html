@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+</head>
+<body style="zoom: 80%">
+<div id="home"></div>
+<div class="ournet-inter-area">
+    <header id="header" class="header-area">
+
+        <div class="logoBlock">
+            <div style="font-size: 16px; text-align: end;">
+                <a class="loginBtn"
+                   href="${pageContext.request.contextPath}/view/language/admin/userPageAdmin?language=RU">
+                    RU
+                </a>
+                <a class="loginBtn"
+                   href="${pageContext.request.contextPath}/view/language/admin/userPageAdmin?language=EN">
+                    EN
+                </a>
+            </div>
+            <p id="pageLogo">ISPAdmin</p>
+            <div class="mainmenu">
+                <ul>
+                    <li><a class="scroll-animite btn"
+                           href="/mainPageAdmin">Main Page</a></li>
+                    <li><a class="scroll-animite btn"
+                           href="/servicePageAdmin">Services</a></li>
+                    <li><a class="scroll-animite btn"
+                           href="/userPageAdmin">Client</a></li>
+                    <li><a class="scroll-animite logOutBtn" href="/logout">Log
+                        Out</a></li>
+                </ul>
+            </div>
+        </div >
+        <div id="time"><span id="datetime"></span></div>
+    </header>
+    <!-- Slider area Start -->
+    <div class="slider-area">
+        <div class="slider-bg text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="slidertext">
+                            <h1>Clients</h1>
+                            <br>
+                            <p>Manage, delete or register new clients</p>
+                        </div>
+                    </div>
+<!--                    <div class="tableTariffs" th:if="${!moreInfo}">-->
+
+<!--                        <table class="table1 sortable">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th class="sorttable_numeric">id</th>-->
+<!--                                <th class="sorttable_alpha">First Name</th>-->
+<!--                                <th class="sorttable_alpha">Second Name</th>-->
+<!--                                <th class="sorttable_numeric">Phone</th>-->
+<!--                                <th class="sorttable_alpha">Email</th>-->
+<!--                                <th class="sorttable_numeric">Wallet</th>-->
+<!--                                <th class="sorttable_numeric">Status</th>-->
+<!--                                <th>Set status</th>-->
+<!--                                <th>Delete</th>-->
+<!--                                <th>More info</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                                <tr class="highlight" th:each="item : ${users}">-->
+<!--                                    <td th:text="${item.id}"></td>-->
+<!--                                    <td th:text="${item.firstName}"></td>-->
+<!--                                    <td th:text="${item.secondName}"></td>-->
+<!--                                    <td th:text="${item.phone}"></td>-->
+<!--                                    <td th:text="${item.email}"></td>-->
+<!--                                    <td th:text="${item.wallet}"></td>-->
+
+<!--                                    <td th:if="${item.status == 1}">-->
+<!--                                        <p style="color: green">Active</p>-->
+<!--                                    </td>-->
+<!--                                    <td th:if="${item.status == 0}">-->
+<!--                                        <p style="color: green">Blocked</p>-->
+<!--                                    </td>-->
+<!--                                    <td th:if="${item.status == 1}">-->
+<!--                                        <a class="deleteButton"-->
+<!--                                           href="/userPageAdmin?command=block&Uid=${item.id}"-->
+<!--                                           onclick="return confirm('')">Block</a>-->
+<!--                                    </td>-->
+<!--                                    <td th:if="${item.status == 0}">-->
+<!--                                        <a class="updateButton"-->
+<!--                                           href="@{/userPageAdmin?command=unlock&Uid=(${item.id})"-->
+<!--                                           onclick="return confirm('')">Unblock</a>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <a class="deleteButton"-->
+<!--                                           href="${pageContext.request.contextPath}/view/admin/userPageAdmin?command=delete&Uid=${item.id}"-->
+<!--                                           onclick="return confirm('')">Delete</a>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <a class="deleteButton" id="moreBtn"-->
+<!--                                           href="/userPageAdmin?command=more&Uid=${item.id}">More</a>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                        <br>-->
+<!--                        <br>-->
+<!--                        <form class="w3-container" align="center" method="post"-->
+<!--                              action="/manageUsers">-->
+<!--                            <input class="btn btnAdd" type="submit" name="add" value="Register client">-->
+<!--                        </form>-->
+<!--                    </div>-->
+
+<!--                    <div class="tableTariffs" th:if="${moreInfo}">-->
+
+<!--                        <h4>Client tariffs</h4>-->
+<!--                        <br>-->
+<!--                        <table class="tableService" id="subService">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th>Name</th>-->
+<!--                                <th>Status</th>-->
+<!--                                <th>Next Bill</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <tr class="highlight" th:each="item : ${userTariffs}">-->
+<!--                                <td th:text="${item.key.name}"></td>-->
+<!--                                <td th:if="${item.value.status == 0}">-->
+<!--                                    <p class="stoppedStatus">Stopped</p>-->
+<!--                                <td th:if="${item.value.status == 1}">-->
+<!--                                    <p class="activeStatus">Active</p>-->
+<!--                                </td>-->
+<!--                                <td th:text="${item.value.nextBill}"></td>-->
+
+<!--                                <td class="endTdUserInfo" th:if="${item.value.status == 0}">-->
+<!--                                    <a class="updateButton"-->
+<!--                                       href="/userPageAdmin?command=more&operation=Activate&Uid=${param.get('Uid')}&Tid=${item.key.id}"-->
+<!--                                       onclick="return confirm('')">Activate</a>-->
+<!--                                <td class="endTdUserInfo" th:if="${item.value.status == 1}">-->
+<!--                                    <a class="deleteButton"-->
+<!--                                       href="${pageContext.request.contextPath}/view/admin/userPageAdmin?command=more&operation=Deactivate&Uid=${param.get('Uid')}&Tid=${item.key.id}"-->
+<!--                                       onclick="">Deactivate</a>-->
+<!--                                </td>-->
+<!--                                <td class="endTdUserInfo">-->
+<!--                                    <a class="deleteButton"-->
+<!--                                       href="${pageContext.request.contextPath}/view/admin/userPageAdmin?command=more&operation=Unsubscribe&Uid=${param.get('Uid')}&Tid=${item.key.id}"-->
+<!--                                       onclick="">Unsubscribe user</a>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<script src="${pageContext.request.contextPath}/styles/js/time.js"></script>-->
+    <!--<script src="${pageContext.request.contextPath}/styles/js/jquery-3.2.1.min.js"></script>-->
+    <!--<script src="${pageContext.request.contextPath}/styles/js/rowLight.js"></script>-->
+    <!--<script src="${pageContext.request.contextPath}/styles/js/sorttable.js"></script>-->
+
+
+</body>
+</html>

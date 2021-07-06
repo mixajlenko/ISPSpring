@@ -13,52 +13,52 @@ import java.util.Set;
 
 @Data
 @Entity
-@Builder
 @Table(name = "t_user")
-@NoArgsConstructor
-@RequiredArgsConstructor
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
     private Long id;
 
-    @NonNull
     @Column(name = "email")
     @Email
     private String username;
 
-    @NonNull
     @Size(min=2, message = "No Less than 2 characters")
     private String password;
 
-//    @NonNull
-//    @Transient
-//    private String passwordConfirm;
-
-    @NonNull
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @NonNull
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Status> statuses;
 
-    @NonNull
     @Size(min=2, message = "No Less than 2 characters")
     private String firstName;
 
-    @NonNull
     @Size(min=2, message = "No Less than 2 characters")
     private String secondName;
 
-    @NonNull
     @Size(min=10, message = "No Less than 10 digits")
     private String phone;
 
-    @NonNull
-    private String wallet;
+    private int wallet;
 
+    public User() {
+
+    }
+
+    public User(Long id, String username, String password, Set<Role> roles, Set<Status> statuses, String firstName, String secondName, String phone, int wallet) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+        this.statuses = statuses;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.phone = phone;
+        this.wallet = wallet;
+    }
 
     @Override
     public String getUsername() {

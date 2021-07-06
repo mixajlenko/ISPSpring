@@ -13,25 +13,23 @@ public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
     private long id;
-    @NonNull
+
     private String name;
 
     @Transient
-    @ManyToMany(mappedBy = "role")
-    @NonNull
+    @ManyToMany(mappedBy = "role", fetch=FetchType.EAGER)
     private Set<User> users;
 
     public Role() {
 
     }
 
-    public Role(@NonNull long id) {
+    public Role(long id) {
         this.id = id;
     }
 
-    public Role(@NonNull long id, @NonNull String name) {
+    public Role(long id, String name) {
         this.id = id;
         this.name = name;
     }

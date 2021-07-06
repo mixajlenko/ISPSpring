@@ -13,25 +13,23 @@ public class Status {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
     private long id;
-    @NonNull
+
     private String name;
 
     @Transient
-    @ManyToMany(mappedBy = "status")
-    @NonNull
+    @ManyToMany(mappedBy = "status", fetch=FetchType.EAGER)
     private Set<User> users;
 
     public Status() {
 
     }
 
-    public Status(@NonNull long id) {
+    public Status(long id) {
         this.id = id;
     }
 
-    public Status(@NonNull long id, @NonNull String name) {
+    public Status(long id, String name) {
         this.id = id;
         this.name = name;
     }

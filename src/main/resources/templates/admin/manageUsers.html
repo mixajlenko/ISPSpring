@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ISPAdmin: New Client</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+</head>
+<body style="zoom: 80%">
+<div id="home"></div>
+<div class="ournet-inter-area">
+    <header id="header" class="header-area">
+
+        <div class="logoBlock">
+            <div style="font-size: 16px; text-align: end;">
+                <a class="loginBtn"
+                   href="${pageContext.request.contextPath}/view/language/admin/manageUsers?language=RU">
+                    RU
+                </a>
+                <a class="loginBtn"
+                   href="${pageContext.request.contextPath}/view/language/admin/manageUsers?language=EN">
+                    EN
+                </a>
+            </div>
+            <p id="pageLogo">ISPAdmin</p>
+            <div class="mainmenu">
+                <ul>
+                    <li><a class="scroll-animite btn"
+                           href="/mainPageAdmin">
+                        Main Page
+                    </a></li>
+                    <li><a class="scroll-animite btn"
+                           href="/servicePageAdmin">
+                        Service
+                    </a></li>
+                    <li><a class="scroll-animite btn"
+                           href="/userPageAdmin">
+                        Clients
+                    </a></li>
+                    <li><a class="scroll-animite logOutBtn" href="/logout">
+                        Log Out
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="time"><span id="datetime"></span></div>
+        <script type="text/javascript" th:src="@{/js/time.js}"></script>
+
+    </header>
+    <!-- Slider area Start -->
+    <div class="slider-area">
+        <div class="slider-bg text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="slidertext">
+                            <h1>
+                                Client Registration
+                            </h1>
+                            <br>
+                            <p>
+                                Fill information about user
+                            </p>
+                        </div>
+                    </div>
+                    <div class="newTariff">
+                        <form method="post"
+                              action="/manageUsers">
+                            <p>
+                                <label>
+                                    <input class="tariff1" type="text" required placeholder="First Name"
+                                    name="fName">
+                                </label>
+                            </p>
+                            <p>
+                                <label>
+                                    <input class="tariff1" type="text" required placeholder="Second Name"
+                                    name="sName">
+                                </label>
+                            </p>
+                            <p>
+                                <label>
+                                    <input class="tariff1" type="email" required placeholder="Email"
+                                    name="email">
+                                </label>
+                            </p>
+                            <p>
+                                <label>
+                                    <input class="tariff1" type="text" required placeholder="Phone"
+                                    name="phone">
+                                </label>
+                            </p>
+                            <p>
+                                <label>
+                                    <input class="tariff1" type="password" required placeholder="Password"
+                                    name="password">
+                                </label>
+                            </p>
+                            <input id="submitBtn" type="submit" value="Registration"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
