@@ -49,67 +49,72 @@
                             <p>Manage, delete or register new clients</p>
                         </div>
                     </div>
-<!--                    <div class="tableTariffs" th:if="${!moreInfo}">-->
+<!--                    th:if="${!moreInfo}"-->
+                    <div class="tableTariffs" >
 
-<!--                        <table class="table1 sortable">-->
-<!--                            <thead>-->
-<!--                            <tr>-->
-<!--                                <th class="sorttable_numeric">id</th>-->
-<!--                                <th class="sorttable_alpha">First Name</th>-->
-<!--                                <th class="sorttable_alpha">Second Name</th>-->
-<!--                                <th class="sorttable_numeric">Phone</th>-->
-<!--                                <th class="sorttable_alpha">Email</th>-->
-<!--                                <th class="sorttable_numeric">Wallet</th>-->
-<!--                                <th class="sorttable_numeric">Status</th>-->
-<!--                                <th>Set status</th>-->
-<!--                                <th>Delete</th>-->
-<!--                                <th>More info</th>-->
-<!--                            </tr>-->
-<!--                            </thead>-->
-<!--                            <tbody>-->
-<!--                                <tr class="highlight" th:each="item : ${users}">-->
-<!--                                    <td th:text="${item.id}"></td>-->
-<!--                                    <td th:text="${item.firstName}"></td>-->
-<!--                                    <td th:text="${item.secondName}"></td>-->
-<!--                                    <td th:text="${item.phone}"></td>-->
-<!--                                    <td th:text="${item.email}"></td>-->
-<!--                                    <td th:text="${item.wallet}"></td>-->
+                        <table class="table1 sortable">
+                            <thead>
+                            <tr>
+                                <th class="sorttable_numeric">id</th>
+                                <th class="sorttable_alpha">First Name</th>
+                                <th class="sorttable_alpha">Second Name</th>
+                                <th class="sorttable_numeric">Phone</th>
+                                <th class="sorttable_alpha">Email</th>
+                                <th class="sorttable_numeric">Wallet</th>
+                                <th class="sorttable_numeric">Status</th>
+                                <th>Set status</th>
+                                <th>Delete</th>
+                                <th>More info</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight" th:each="item : ${users}">
+                                    <td th:text="${item.id}"></td>
+                                    <td th:text="${item.firstName}"></td>
+                                    <td th:text="${item.secondName}"></td>
+                                    <td th:text="${item.phone}"></td>
+                                    <td th:text="${item.username}"></td>
+                                    <td th:text="${item.wallet}"></td>
 
-<!--                                    <td th:if="${item.status == 1}">-->
-<!--                                        <p style="color: green">Active</p>-->
-<!--                                    </td>-->
-<!--                                    <td th:if="${item.status == 0}">-->
-<!--                                        <p style="color: green">Blocked</p>-->
-<!--                                    </td>-->
-<!--                                    <td th:if="${item.status == 1}">-->
-<!--                                        <a class="deleteButton"-->
-<!--                                           href="/userPageAdmin?command=block&Uid=${item.id}"-->
-<!--                                           onclick="return confirm('')">Block</a>-->
-<!--                                    </td>-->
-<!--                                    <td th:if="${item.status == 0}">-->
-<!--                                        <a class="updateButton"-->
-<!--                                           href="@{/userPageAdmin?command=unlock&Uid=(${item.id})"-->
-<!--                                           onclick="return confirm('')">Unblock</a>-->
-<!--                                    </td>-->
-<!--                                    <td>-->
+                                    <td th:if="${item.statuses[0].id == 2}">
+                                        <p style="color: green">Active</p>
+                                    </td>
+                                    <td th:if="${item.statuses[0].id == 1}">
+                                        <p style="color: green">Blocked</p>
+                                    </td>
+                                    <td th:if="${item.statuses[0].id == 2}">
+                                        <form  th:action="@{/userPageAdmin(action='block',userId=${item.id})}" method="post">
+                                            <button class="updateButton" type="submit">Block</button>
+                                        </form>
+                                    </td>
+                                    <td th:if="${item.statuses[0].id == 1}">
+                                        <form  th:action="@{/userPageAdmin(action='unblock',userId=${item.id})}" method="post">
+                                            <button class="updateButton" type="submit">Unblock</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form  th:action="@{/userPageAdmin(action='delete',userId=${item.id})}" method="post">
+                                            <button class="deleteButton" type="submit">Delete</button>
+                                        </form>
 <!--                                        <a class="deleteButton"-->
 <!--                                           href="${pageContext.request.contextPath}/view/admin/userPageAdmin?command=delete&Uid=${item.id}"-->
 <!--                                           onclick="return confirm('')">Delete</a>-->
-<!--                                    </td>-->
-<!--                                    <td>-->
-<!--                                        <a class="deleteButton" id="moreBtn"-->
-<!--                                           href="/userPageAdmin?command=more&Uid=${item.id}">More</a>-->
-<!--                                    </td>-->
-<!--                                </tr>-->
-<!--                            </tbody>-->
-<!--                        </table>-->
-<!--                        <br>-->
-<!--                        <br>-->
-<!--                        <form class="w3-container" align="center" method="post"-->
+                                    </td>
+                                    <td>
+                                        <a class="deleteButton" id="moreBtn"
+                                           href="/userPageAdmin?command=more&Uid=${item.id}">More</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <br>
+                        <a class="w3-container" align="center" href="/manageUsers">Register client</a>
+<!--                        <form class="w3-container" align="center" method="get"-->
 <!--                              action="/manageUsers">-->
 <!--                            <input class="btn btnAdd" type="submit" name="add" value="Register client">-->
 <!--                        </form>-->
-<!--                    </div>-->
+                    </div>
 
 <!--                    <div class="tableTariffs" th:if="${moreInfo}">-->
 

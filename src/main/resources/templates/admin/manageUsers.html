@@ -63,39 +63,28 @@
                         </div>
                     </div>
                     <div class="newTariff">
-                        <form method="post"
-                              action="/manageUsers">
-                            <p>
-                                <label>
-                                    <input class="tariff1" type="text" required placeholder="First Name"
-                                    name="fName">
-                                </label>
-                            </p>
-                            <p>
-                                <label>
-                                    <input class="tariff1" type="text" required placeholder="Second Name"
-                                    name="sName">
-                                </label>
-                            </p>
-                            <p>
-                                <label>
-                                    <input class="tariff1" type="email" required placeholder="Email"
-                                    name="email">
-                                </label>
-                            </p>
-                            <p>
-                                <label>
-                                    <input class="tariff1" type="text" required placeholder="Phone"
-                                    name="phone">
-                                </label>
-                            </p>
-                            <p>
-                                <label>
-                                    <input class="tariff1" type="password" required placeholder="Password"
-                                    name="password">
-                                </label>
-                            </p>
-                            <input id="submitBtn" type="submit" value="Registration"/>
+                        <form action="/manageUsers" th:object="${userForm}" method="POST">
+                            <div>
+                                <label>First name</label>
+                                <input th:field="*{firstName}"/>
+                            </div>
+                            <div>
+                                <label>Second name</label>
+                                <input th:field="*{secondName}"/>
+                            </div>
+                            <div>
+                                <label>email</label>
+                                <input type="email" th:field="*{username}"/>
+                            </div>
+                            <div>
+                                <label>phone</label>
+                                <input type="text" th:field="*{phone}"/>
+                            </div>
+                            <div>
+                                <label>password</label>
+                                <input type="password" th:field="*{password}"/>
+                            </div>
+                            <button type="submit" th:text="Submit">submit</button>
                         </form>
                     </div>
                 </div>

@@ -29,7 +29,7 @@
                     <li><a class="scroll-animite btn"
                            href="/servicePageAdmin">Services</a></li>
                     <li><a class="scroll-animite btn"
-                           href="/adminPage/userPageAdmin">Clients</a></li>
+                           href="/userPageAdmin">Clients</a></li>
                     <li><a class="scroll-animite logOutBtn"
                            href="/logout">Log Out</a></li>
                 </ul>
@@ -52,9 +52,9 @@
                         </div>
                     </div>
                     <div class="userInfoAdmin">
-                        <h4>Clients count: ${users}</h4>
-                        <h4>Active count: ${active}</h4>
-                        <h4>Blocked count: ${blocked}</h4>
+                        <h4>Clients count: <span th:text="${allUsers}"></span></h4>
+                        <h4>Active count: <span th:text="${unlocked}"></span></h4>
+                        <h4>Blocked count: <span th:text="${blocked}"></span></h4>
                     </div>
                     <div class="userInfoAdmin">
                         <h4>Tariffs count: ${AllTariffs}</h4>

@@ -48,6 +48,10 @@ public class User implements UserDetails {
 
     }
 
+    public User(Set<Status> statuses) {
+        this.statuses = statuses;
+    }
+
     public User(Long id, String username, String password, Set<Role> roles, Set<Status> statuses, String firstName, String secondName, String phone, int wallet) {
         this.id = id;
         this.username = username;

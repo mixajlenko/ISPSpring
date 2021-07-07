@@ -24,6 +24,32 @@ public class RegistrationController {
         return "registration";
     }
 
+    @GetMapping("/manageUsers")
+    public String addNewUserByAdminForm(Model model) {
+        model.addAttribute("userForm", new User());
+        return "admin/manageUsers";
+    }
+
+    @PostMapping("/manageUsers")
+    public String addNewUserByAdmin( @ModelAttribute("userForm") @Valid User userForm, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "admin/manageUsers";
+        }
+
+//        if (!userForm.getPassword().equals(userForm.getPasswordConfirm())){
+//            model.addAttribute("passwordError", "Password isn't similar");
+//            return "registration";
+//        }
+
+        if (!userService.saveUser(userForm)) {
+            model.addAttribute("alreadyExist", true);
+            return "admin/manageUsers";
+        }
+
+        return "redirect:/userPageAdmin";
+    }
+
     @PostMapping("/registration")
     public String addUser( @ModelAttribute("userForm") @Valid User userForm, BindingResult bindingResult, Model model) {
 
@@ -43,5 +69,7 @@ public class RegistrationController {
 
         return "redirect:/login";
     }
+
+
 
 }

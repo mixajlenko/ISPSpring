@@ -1,6 +1,8 @@
 package com.mixajlenko.ispspring.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
