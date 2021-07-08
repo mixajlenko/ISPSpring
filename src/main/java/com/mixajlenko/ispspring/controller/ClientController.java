@@ -11,8 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @Controller
 public class ClientController {
 
@@ -35,7 +33,7 @@ public class ClientController {
         model.addAttribute("payment", new Payment());
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int wallet = ((User) principal).getWallet();
-        model.addAttribute("paymentHistory", paymentService.allPayments());
+        model.addAttribute("paymentHistory", paymentService.allPaymentsByUser());
         model.addAttribute("funds", wallet);
         return "client/paymentSystem";
     }
@@ -48,22 +46,71 @@ public class ClientController {
 
     @GetMapping("/manage")
     public String manage(@RequestParam(value = "param") String param, Model model) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findUserById(((User)principal).getId());
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserById(principal.getId());
         model.addAttribute("command", param);
         model.addAttribute("userForm", user);
         return "client/profile";
     }
 
-    @PostMapping("/manage")
-    public String manageSubmit(@ModelAttribute("userForm") @Valid User userForm,@RequestParam(value = "param") String param) {
+    @PostMapping("/managePassword")
+    public String manageSubmit(@RequestParam(value = "oldPass") String oldPass,
+                               @RequestParam(value = "newPass") String newPass) {
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findUserById(((User)principal).getId());
-        user.setFirstName(userForm.getFirstName());
-        user.setSecondName(userForm.getSecondName());
-        //TODO
+        User user = userService.findUserById(((User) principal).getId());
+
+        if (userService.passwordVerify(user, oldPass)) {
+            user.setPassword(userService.passwordEncode(newPass));
+        }
+
         userRepository.save(user);
-        return "redirect:/manage?param="+param;
+        return "redirect:/manage?param=managePassword";
+    }
+
+    @PostMapping("/manageName")
+    public String manageName(@RequestParam(value = "firstName") String firstName,
+                             @RequestParam(value = "secondName") String secondName) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserById(((User) principal).getId());
+
+
+        user.setFirstName(firstName);
+        user.setSecondName(secondName);
+
+
+        userRepository.save(user);
+        return "redirect:/manage?param=manageName";
+    }
+
+    @PostMapping("/manageEmail")
+    public String manageName(@RequestParam(value = "username") String username) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserById(((User) principal).getId());
+
+        user.setUsername(username);
+
+        userRepository.save(user);
+        return "redirect:/manage?param=manageEmail";
+    }
+
+    @PostMapping("/managePhone")
+    public String managePhone(@RequestParam(value = "phone") String phone) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserById(((User) principal).getId());
+
+        user.setPhone(phone);
+
+        userRepository.save(user);
+        return "redirect:/manage?param=managePhone";
+    }
+
+    @GetMapping("/supportPage")
+    public String supportPage(){
+        return "client/supportPage";
     }
 
 

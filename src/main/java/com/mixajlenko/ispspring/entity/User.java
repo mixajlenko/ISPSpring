@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
-import java.util.Collection;
+import java.util.*;
 import java.util.Set;
 
 @Data
@@ -24,22 +24,28 @@ public class User implements UserDetails {
     @Email
     private String username;
 
-    @Size(min=2, message = "No Less than 2 characters")
+    @Size(min = 2, message = "No Less than 2 characters")
     private String password;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Status> statuses;
 
-    @Size(min=2, message = "No Less than 2 characters")
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Status> statuses;
+
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Tariff> tariffs;
+
+    @Size(min = 2, message = "No Less than 2 characters")
     private String firstName;
 
-    @Size(min=2, message = "No Less than 2 characters")
+    @Size(min = 2, message = "No Less than 2 characters")
     private String secondName;
 
-    @Size(min=10, message = "No Less than 10 digits")
+    @Size(min = 10, message = "No Less than 10 digits")
     private String phone;
 
     private int wallet;
@@ -48,11 +54,20 @@ public class User implements UserDetails {
 
     }
 
-    public User(Set<Status> statuses) {
+    public User(Long id, String username, String password, Set<Role> roles, List<Status> statuses, Set<Tariff> tariffs, String firstName, String secondName, String phone, int wallet) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
         this.statuses = statuses;
+        this.tariffs = tariffs;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.phone = phone;
+        this.wallet = wallet;
     }
 
-    public User(Long id, String username, String password, Set<Role> roles, Set<Status> statuses, String firstName, String secondName, String phone, int wallet) {
+    public User(Long id, String username, String password, Set<Role> roles, List<Status> statuses, String firstName, String secondName, String phone, int wallet) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -62,6 +77,11 @@ public class User implements UserDetails {
         this.secondName = secondName;
         this.phone = phone;
         this.wallet = wallet;
+    }
+
+    public void setStatuses(Status status) {
+        this.statuses = new ArrayList<>();
+        this.statuses.add(status);
     }
 
     @Override

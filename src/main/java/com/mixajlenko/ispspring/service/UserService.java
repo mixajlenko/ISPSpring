@@ -27,12 +27,16 @@ public class UserService implements UserDetailsService {
 //    private EntityManager entityManager;
     @Autowired
     UserRepository userRepository;
+
     @Autowired
     RoleRepository roleRepository;
+
     @Autowired
     StatusRepository statusRepository;
+
     @Autowired
     PaymentRepository paymentRepository;
+
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -53,22 +57,18 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public boolean manageUserStatus(User user, String command) {
+    public boolean manageUserStatus(Long userId, int command) {
 
-        User user1 = userRepository.findByUsername(user.getUsername());
-        user1.setStatuses(Collections.singleton(new Status(2L,"STATUS_UNBLOCKED")));
-        userRepository.deleteById(user.getId());
-//        user1.setUsername(user.getUsername());
-//        user1.setWallet(user.getWallet());
-//        user1.setId(user.getId());
-//        user1.setPhone(user.getPhone());
-//        user1.setFirstName(user.getFirstName());
-//        user1.setSecondName(user.getSecondName());
-//        user1.setPassword(user.getPassword());
-//        user1.setStatuses(Collections.singleton(new Status(1L,"STATUS_BLOCKED")));
-//        user1.setRoles(user.getRoles());
+        User user = userRepository.getById(userId);
 
-        userRepository.save(user1);
+        if (command == 1) {
+            user.setStatuses(new Status(1L, "STATUS_BLOCKED"));
+        } else {
+            user.setStatuses(new Status(2L, "STATUS_UNBLOCKED"));
+
+        }
+
+        userRepository.save(user);
 
         return true;
     }
@@ -89,11 +89,19 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        user.setStatuses(Collections.singleton(new Status(1L, "STATUS_BLOCKED")));
+        user.setStatuses(new Status(1L, "STATUS_BLOCKED"));
         user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
+    }
+
+    public String passwordEncode(String decodedPass) {
+        return bCryptPasswordEncoder.encode(decodedPass);
+    }
+
+    public boolean passwordVerify(User user, String pass) {
+        return bCryptPasswordEncoder.matches(pass, user.getPassword());
     }
 
     public boolean deleteUser(Long userId) {

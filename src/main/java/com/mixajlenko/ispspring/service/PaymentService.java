@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,6 +30,12 @@ public class PaymentService {
         return paymentRepository.findAll();
     }
 
+    public List<Payment> allPaymentsByUser() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return paymentRepository.findAllByUserId(user.getId());
+    }
+
+
     @Transactional
     public boolean savePayment(Payment payment) {
         Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -41,7 +46,7 @@ public class PaymentService {
         payment.setUser((User) user);
         paymentRepository.save(payment);
         ((User) user).setWallet(((User)user).getWallet()+payment.getBill());
-        ((User)user).setStatuses(Collections.singleton(new Status(2L,"STATUS_UNBLOCKED")));
+        ((User)user).setStatuses(new Status(2L,"STATUS_UNBLOCKED"));
 
         userRepository.save(((User)user));
         return true;

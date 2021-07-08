@@ -17,8 +17,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findAllByStatusesId(Long id);
 
-//    @Modifying
-//    @Query("update User set statuses = ?1 where id = ?2")
-//    void setUserInfoById(Set<Status> statuses, Long userId);
-
 }

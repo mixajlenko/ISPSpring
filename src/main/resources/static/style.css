@@ -651,8 +651,11 @@ input.tariff1 {
     border-radius: 11px;
     text-align: center;
     width: 250px;
-    height: 200px;
     margin: auto;
+}
+
+.serviceRow{
+    margin: 5px;
 }
 
 .plansBlock {

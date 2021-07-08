@@ -4,7 +4,7 @@ package com.mixajlenko.ispspring.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Entity
@@ -19,7 +19,7 @@ public class Status {
 
     @Transient
     @ManyToMany(mappedBy = "status", fetch=FetchType.EAGER)
-    private Set<User> users;
+    private List<User> users;
 
     public Status() {
 

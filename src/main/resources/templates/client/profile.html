@@ -52,7 +52,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/profile?change=email">
+                                <a th:href="@{/manage(param='manageEmail')}">
                                     Email
                                 </a>
                             </li>
@@ -62,7 +62,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/profile?change=password">
+                                <a th:href="@{/manage(param='managePassword')}">
                                     Password
                                 </a>
                             </li>
@@ -96,22 +96,24 @@
                         </div>
                     </div>
                     <div class="tableTariffs" id="payment">
-
-
                         <th:block th:switch="${command}">
                             <div th:case="'manageName'">
                                 <div class="editNameForm">
                                     <h3>
                                         Manage Name
                                     </h3>
-                                    <form class="editFormChild" th:object="${userForm}" method="post">
+                                    <form th:action="@{/manageName}" method="post">
                                         <p>
-                                            <label>First name</label>
-                                            <input th:field="*{firstName}"/>
+                                            <label>
+                                                <input type="text" th:field="${userForm.firstName}" required
+                                                       placeholder="First Name"/>
+                                            </label>
                                         </p>
                                         <p>
-                                            <label>Second name</label>
-                                            <input th:field="*{secondName}"/>
+                                            <label>
+                                                <input type="text" th:field="${userForm.secondName}" required
+                                                       placeholder="Second Name"/>
+                                            </label>
                                         </p>
                                         <div>
                                             <button type="submit" th:text="Submit">submit</button>
@@ -120,118 +122,154 @@
                                 </div>
                             </div>
                             <div th:case="'managePhone'">
-                                <div class="editPhoneForm">-->
+                                <div class="editNameForm">
                                     <h3>
                                         Manage Phone
                                     </h3>
-                                    <form class="editFormChild" method="post"
-                                          action="/profile?change=phone&redirect=true">
+                                    <form th:action="@{/managePhone}" method="post">
                                         <p>
                                             <label>
-                                                <input class="profileEditorFields" type="text" required
-                                                       value="${phone}"
-                                                       placeholder="Phone"
-                                                       name="phone">
+                                                <input type="text" th:field="${userForm.phone}" required
+                                                       placeholder="Phone"/>
                                             </label>
                                         </p>
                                         <div>
-                                            <input class="btn editProfileBtn" type="submit"
-                                                   value="Submit" name="changePhone">
+                                            <button type="submit" th:text="Submit">submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div th:case="'managePassword'">
+                                <div class="editNameForm">
+                                    <h3>
+                                        Manage Password
+                                    </h3>
+                                    <form th:action="@{/manage(action='managePassword')}" method="post">
+                                        <p>
+                                            <label>
+                                                <input type="password" th:name="oldPass" required
+                                                       placeholder="Old Password"/>
+                                            </label>
+                                        </p>
+                                        <p>
+                                            <label>
+                                                <input type="password" th:name="newPass" required
+                                                       placeholder="New Password"/>
+                                            </label>
+                                        </p>
+                                        <input type="submit"/>
+                                    </form>
+                                </div>
+                            </div>
+                            <div th:case="'manageEmail'">
+                                <div class="editNameForm">
+                                    <h3>
+                                        Manage Email
+                                    </h3>
+                                    <form th:action="@{/manageEmail}" method="post">
+                                        <p>
+                                            <label>
+                                                <input type="email" th:field="${userForm.username}" required
+                                                       placeholder="Email"/>
+                                            </label>
+                                        </p>
+                                        <div>
+                                            <button type="submit" th:text="Submit">submit</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </th:block>
 
-                            <!--                                <c:when test="${phoneChange}">-->
-                            <!--                                    <div class="editPhoneForm">-->
-                            <!--                                        <h3><fmt:message-->
-                            <!--                                                key="managePhone"/></h3>-->
-                            <!--                                        <form class="editFormChild" method="post"-->
-                            <!--                                              action="${pageContext.request.contextPath}/view/client/profile?change=phone&redirect=true">-->
-                            <!--                                            <p>-->
-                            <!--                                                <label>-->
-                            <!--                                                    <input class="profileEditorFields" type="text" required-->
-                            <!--                                                           value="${phone}"-->
-                            <!--                                                           placeholder="<fmt:message-->
-                            <!--                                key="phone"/>"-->
-                            <!--                                                    name="phone">-->
-                            <!--                                                </label>-->
-                            <!--                                            </p>-->
-                            <!--                                            <div>-->
-                            <!--                                                <input class="btn editProfileBtn" type="submit"-->
-                            <!--                                                       value="<fmt:message-->
-                            <!--                                key="submit"/>" name="changePhone">-->
-                            <!--                                            </div>-->
-                            <!--                                        </form>-->
-                            <!--                                    </div>-->
-                            <!--                                </c:when>-->
-                            <!--                                <c:when test="${emailChange}">-->
-                            <!--                                    <div class="editEmailForm">-->
-                            <!--                                        <h3><fmt:message-->
-                            <!--                                                key="manageEmail"/></h3>-->
-                            <!--                                        <form class="editFormChild" method="post"-->
-                            <!--                                              action="${pageContext.request.contextPath}/view/client/profile?change=email&redirect=true">-->
-                            <!--                                            <p>-->
-                            <!--                                                <label>-->
-                            <!--                                                    <input class="profileEditorFields" type="email" required-->
-                            <!--                                                           value="${email}"-->
-                            <!--                                                           placeholder="<fmt:message-->
-                            <!--                                key="placeholderEmail"/>"-->
-                            <!--                                                    name="email">-->
-                            <!--                                                </label>-->
-                            <!--                                            </p>-->
-                            <!--                                            <div>-->
-                            <!--                                                <input class="btn editProfileBtn" type="submit"-->
-                            <!--                                                       value="<fmt:message-->
-                            <!--                                key="submit"/>" name="changeEmail">-->
-                            <!--                                            </div>-->
-                            <!--                                        </form>-->
-                            <!--                                    </div>-->
-                            <!--                                </c:when>-->
-                            <!--                                <c:when test="${passChange}">-->
-                            <!--                                    <div class="editPassForm">-->
-                            <!--                                        <h3><fmt:message-->
-                            <!--                                                key="managePassword"/></h3>-->
-                            <!--                                        <form class="editFormChild" method="post"-->
-                            <!--                                              action="${pageContext.request.contextPath}/view/client/profile?change=password&redirect=true">-->
-                            <!--                                            <p>-->
-                            <!--                                                <label>-->
-                            <!--                                                    <input class="profileEditorFields" type="password" required-->
-                            <!--                                                           placeholder="<fmt:message-->
-                            <!--                                key="placeholderOldPass"/>"-->
-                            <!--                                                    name="oldPass">-->
-                            <!--                                                </label>-->
-                            <!--                                            </p>-->
-                            <!--                                            <p>-->
-                            <!--                                                <label>-->
-                            <!--                                                    <input class="profileEditorFields" type="password" required-->
-                            <!--                                                           placeholder="<fmt:message-->
-                            <!--                                key="placeholderNewPass"/>"-->
-                            <!--                                                    name="newPass">-->
-                            <!--                                                </label>-->
-                            <!--                                            </p>-->
-                            <!--                                            <div>-->
-                            <!--                                                <input class="btn editProfileBtn " type="submit"-->
-                            <!--                                                       value="<fmt:message-->
-                            <!--                                key="submit"/>" name="changePassword">-->
-                            <!--                                            </div>-->
-                            <!--                                        </form>-->
-                            <!--                                    </div>-->
-                            <!--                                </c:when>-->
-                            <!--                                <c:when test="${success}">-->
-                            <!--                                    <p><fmt:message key="savedChanges"/></p>-->
-                            <!--                                </c:when>-->
-                            <!--                                <c:when test="${!success}">-->
-                            <!--                                    <p><fmt:message key="passFail"/></p>-->
-                            <!--                                </c:when>-->
-                            </c:choose>
-                        </div>
+                        <!--                                <c:when test="${phoneChange}">-->
+                        <!--                                    <div class="editPhoneForm">-->
+                        <!--                                        <h3><fmt:message-->
+                        <!--                                                key="managePhone"/></h3>-->
+                        <!--                                        <form class="editFormChild" method="post"-->
+                        <!--                                              action="${pageContext.request.contextPath}/view/client/profile?change=phone&redirect=true">-->
+                        <!--                                            <p>-->
+                        <!--                                                <label>-->
+                        <!--                                                    <input class="profileEditorFields" type="text" required-->
+                        <!--                                                           value="${phone}"-->
+                        <!--                                                           placeholder="<fmt:message-->
+                        <!--                                key="phone"/>"-->
+                        <!--                                                    name="phone">-->
+                        <!--                                                </label>-->
+                        <!--                                            </p>-->
+                        <!--                                            <div>-->
+                        <!--                                                <input class="btn editProfileBtn" type="submit"-->
+                        <!--                                                       value="<fmt:message-->
+                        <!--                                key="submit"/>" name="changePhone">-->
+                        <!--                                            </div>-->
+                        <!--                                        </form>-->
+                        <!--                                    </div>-->
+                        <!--                                </c:when>-->
+                        <!--                                <c:when test="${emailChange}">-->
+                        <!--                                    <div class="editEmailForm">-->
+                        <!--                                        <h3><fmt:message-->
+                        <!--                                                key="manageEmail"/></h3>-->
+                        <!--                                        <form class="editFormChild" method="post"-->
+                        <!--                                              action="${pageContext.request.contextPath}/view/client/profile?change=email&redirect=true">-->
+                        <!--                                            <p>-->
+                        <!--                                                <label>-->
+                        <!--                                                    <input class="profileEditorFields" type="email" required-->
+                        <!--                                                           value="${email}"-->
+                        <!--                                                           placeholder="<fmt:message-->
+                        <!--                                key="placeholderEmail"/>"-->
+                        <!--                                                    name="email">-->
+                        <!--                                                </label>-->
+                        <!--                                            </p>-->
+                        <!--                                            <div>-->
+                        <!--                                                <input class="btn editProfileBtn" type="submit"-->
+                        <!--                                                       value="<fmt:message-->
+                        <!--                                key="submit"/>" name="changeEmail">-->
+                        <!--                                            </div>-->
+                        <!--                                        </form>-->
+                        <!--                                    </div>-->
+                        <!--                                </c:when>-->
+                        <!--                                <c:when test="${passChange}">-->
+                        <!--                                    <div class="editPassForm">-->
+                        <!--                                        <h3><fmt:message-->
+                        <!--                                                key="managePassword"/></h3>-->
+                        <!--                                        <form class="editFormChild" method="post"-->
+                        <!--                                              action="${pageContext.request.contextPath}/view/client/profile?change=password&redirect=true">-->
+                        <!--                                            <p>-->
+                        <!--                                                <label>-->
+                        <!--                                                    <input class="profileEditorFields" type="password" required-->
+                        <!--                                                           placeholder="<fmt:message-->
+                        <!--                                key="placeholderOldPass"/>"-->
+                        <!--                                                    name="oldPass">-->
+                        <!--                                                </label>-->
+                        <!--                                            </p>-->
+                        <!--                                            <p>-->
+                        <!--                                                <label>-->
+                        <!--                                                    <input class="profileEditorFields" type="password" required-->
+                        <!--                                                           placeholder="<fmt:message-->
+                        <!--                                key="placeholderNewPass"/>"-->
+                        <!--                                                    name="newPass">-->
+                        <!--                                                </label>-->
+                        <!--                                            </p>-->
+                        <!--                                            <div>-->
+                        <!--                                                <input class="btn editProfileBtn " type="submit"-->
+                        <!--                                                       value="<fmt:message-->
+                        <!--                                key="submit"/>" name="changePassword">-->
+                        <!--                                            </div>-->
+                        <!--                                        </form>-->
+                        <!--                                    </div>-->
+                        <!--                                </c:when>-->
+                        <!--                                <c:when test="${success}">-->
+                        <!--                                    <p><fmt:message key="savedChanges"/></p>-->
+                        <!--                                </c:when>-->
+                        <!--                                <c:when test="${!success}">-->
+                        <!--                                    <p><fmt:message key="passFail"/></p>-->
+                        <!--                                </c:when>-->
+                        </c:choose>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <script src="${pageContext.request.contextPath}/styles/js/time.js"></script>

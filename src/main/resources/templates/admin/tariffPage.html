@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ISPAdmin: Tariffs</title>
+</head>
+<body style="zoom: 80%">
+<div id="home"></div>
+<div class="ournet-inter-area">
+    <header id="header" class="header-area">
+
+        <div class="logoBlock">
+            <div style="font-size: 16px; text-align: end;">
+                <a class="loginBtn"
+                   href="${pageContext.request.contextPath}/view/language/admin/managePlan?language=RU">
+                    RU
+                </a>
+                <a class="loginBtn"
+                   href="${pageContext.request.contextPath}/view/language/admin/managePlan?language=EN">
+                    EN
+                </a>
+            </div>
+            <p id="pageLogo">ISPAdmin</p>
+            <div class="mainmenu">
+                <ul>
+                    <li><a class="scroll-animite btn"
+                           href="/adminPage">Main Page</a></li>
+                    <li><a class="scroll-animite btn"
+                           href="/servicePage">Services</a></li>
+                    <li><a class="scroll-animite btn"
+                           href="/userPageAdmin">Clients</a></li>
+                    <li><a class="scroll-animite logOutBtn"
+                           href="/logout">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="time"><span id="datetime"></span></div>
+
+    </header>
+    <!-- Slider area Start -->
+    <div class="slider-area">
+        <div class="slider-bg text-center">
+            <div class="container">
+                <div class="row">
+
+                    <!--                    <c:if test="${commandInterface}">-->
+                    <!--                        <div class="col-lg-12">-->
+                    <!--                            <div class="slidertext">-->
+                    <!--                                <h1>Tariffs</h1>-->
+                    <!--                                <br>-->
+                    <!--                                <p>Update Tariff</p>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="newTariff">-->
+                    <!--                            <form method="post"-->
+                    <!--                                  action="${pageContext.request.contextPath}/view/admin/managePlan?param=${param.get('param')}&id=${param.get("id")}&command=updateCommand&redirect=true">-->
+                    <!--                            <p>-->
+                    <!--                                <label>-->
+                    <!--                                    <input class="tariff1" type="text" value="Name"-->
+                    <!--                                    name="name">-->
+                    <!--                                </label>-->
+                    <!--                            </p>-->
+                    <!--                            <p>-->
+                    <!--                                <label>-->
+                    <!--                                    <input class="tariff1" type="text" value="${param.get("description")}" required-->
+                    <!--                                    placeholder="Description"-->
+                    <!--                                    name="description">-->
+                    <!--                                </label>-->
+                    <!--                            </p>-->
+                    <!--                            <p>-->
+                    <!--                                <label>-->
+                    <!--                                    <input class="tariff1" type="text" value="${param.get("price")}" required-->
+                    <!--                                    placeholder="<fmt:message key="tariffPrice"/>"-->
+                    <!--                                    name="price">-->
+                    <!--                                </label>-->
+                    <!--                            </p>-->
+                    <!--                            <input id="submitBtn" type="submit"-->
+                    <!--                                   onclick="return confirm('<fmt:message key="updateConfirm"/>')"-->
+                    <!--                            value="<fmt:message key="update"/>">-->
+                    <!--                            </form>-->
+                    <!--                        </div>-->
+                    <!--                    </c:if>-->
+
+                    <div th:if="${!commandInterface}">
+                        <div class="col-lg-12" >
+                            <div class="slidertext">
+                                <h1>Tariffs</h1>
+                                <br>
+                                <p>Manage, delete or add tariff</p>
+                            </div>
+                        </div>
+                        <div class="tableTariffs">
+                            <table class="table1 sortable">
+                                <thead>
+                                <tr>
+                                    <th class="sorttable_numeric">id</th>
+                                    <th class="sorttable_alpha">Name</th>
+                                    <th class="sorttable_alpha">Description</th>
+                                    <th class="sorttable_numeric">Price</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr class="highlight" th:each="item : ${tariffs}">
+                                        <td><p style="font-size: 16px; text-align: center" th:text="${item.id}"></p></td>
+                                        <td  th:text="${item.name}"></td>
+                                        <td  th:text="${item.description}"></td>
+                                        <td  th:text="${item.price}"></td>
+                                        <td>
+                                            <a class="updateButton" th:href="@{/managePlan(id=${item.id},param=${param.get('param')},name=${item.name},description=${item.description},price=${item.price},command='update')}">
+                                                Update
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a class="deleteButton" th:href="@{/managePlan(id=${item.id},param=${param.get('param')},command='delete')}"
+                                               onclick="return confirm('Delete?')">
+                                            Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                            <br>
+                            <form class="w3-container" align="center" th:action="@{/addTariff(param=${param.get('param')})}" method="post">
+                                <input class="btn btnAdd" type="submit" name="add" value="Add">
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="${pageContext.request.contextPath}/styles/js/time.js"></script>
+<script src="${pageContext.request.contextPath}/styles/js/jquery-3.2.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/styles/js/rowLight.js"></script>
+<script src="${pageContext.request.contextPath}/styles/js/sorttable.js"></script>
+
+</body>
+</html>

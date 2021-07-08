@@ -1,7 +1,10 @@
 package com.mixajlenko.ispspring.controller;
 
+import com.mixajlenko.ispspring.entity.Service;
+import com.mixajlenko.ispspring.entity.Tariff;
 import com.mixajlenko.ispspring.entity.User;
-import com.mixajlenko.ispspring.repository.UserRepository;
+import com.mixajlenko.ispspring.repository.ServiceRepository;
+import com.mixajlenko.ispspring.repository.TariffRepository;
 import com.mixajlenko.ispspring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
@@ -21,7 +23,10 @@ public class AdminController {
     private UserService userService;
 
     @Autowired
-    UserRepository userRepository;
+    private ServiceRepository serviceRepository;
+
+    @Autowired
+    private TariffRepository tariffRepository;
 
 
     @GetMapping("/adminPage")
@@ -35,7 +40,6 @@ public class AdminController {
     @GetMapping("/userPageAdmin")
     public String userPage(Model model) {
         List<User> users = userService.allUsers().stream().filter(u -> u.getId() != 1).collect(Collectors.toList());
-        System.out.println(users);
         model.addAttribute("users", users);
         return "admin/userPageAdmin";
     }
@@ -45,21 +49,34 @@ public class AdminController {
                              @RequestParam(required = true, defaultValue = "") String action,
                              Model model) {
 
-        if (action.equals("delete")) {
-            userService.deleteUser(userId);
-        } else if (action.equals("block")) {
-            userService.manageUserStatus(userRepository.findById(userId).orElse(new User()), action);
-        } else if (action.equals("unblock")) {
-            userService.manageUserStatus(userRepository.findById(userId).orElse(new User()), action);
+        switch (action) {
+            case "delete":
+                userService.deleteUser(userId);
+                break;
+            case "block":
+                userService.manageUserStatus(userId, 1);
+                break;
+            case "unblock":
+                userService.manageUserStatus(userId, 2);
+                break;
+            default:
         }
         return "redirect:/userPageAdmin";
     }
 
-//
-//    @GetMapping("/admin/gt/{userId}")
-//    public String  gtUser(@PathVariable("userId") Long userId, Model model) {
-//        model.addAttribute("allUsers", userService.usergtList(userId));
-//        return "adminPage";
-//    }
+    @GetMapping("/servicePage")
+    public String servicePage(Model model) {
+        List<Service> services = serviceRepository.findAll();
+        model.addAttribute("services", services);
+        return "admin/servicePage";
+    }
+
+    @GetMapping("/tariffPage")
+    public String tariffPage(@RequestParam("param") String param, Model model) {
+        List<Tariff> tariffs = tariffRepository.findAllByServiceId(Long.valueOf(param));
+        model.addAttribute("commandInterface", false);
+        model.addAttribute("tariffs", tariffs);
+        return "admin/servicePage";
+    }
 
 }
