@@ -1,8 +1,10 @@
 
 <html>
 <head>
-    <title>Authorization</title>
+    <title th:text="#{lang.authorization}"></title>
     <link rel="stylesheet" th:href="@{/style.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="internationalization.js"></script>
 </head>
 <body>
 <div class="slider-area">
@@ -10,17 +12,13 @@
         <div class="container">
             <div class="row">
                 <div class="slidertext">
-                    <h3>Authorization</h3>
+                    <h3 th:text="#{lang.authorization}"></h3>
                 </div>
                 <div class="tableTariffs">
                     <div class="localRegistrationBlock">
-                        <a class="loginBtn" href="/registration">Registration</a>
-                        <a class="loginBtn" href="/view/language//?language=RU">
-                            RU
-                        </a>
-                        <a class="loginBtn" href="/view/language//?language=EN">
-                            EN
-                        </a>
+                        <a class="loginBtn" href="/registration" th:text="#{lang.registration}"></a>
+                        <a th:href="@{/login(lang='eng')}">EN</a>
+                        <a th:href="@{/login(lang='ru')}">RU</a>
                     </div>
                     <form class="w3-container" align="center" method="post"
                           action="/login">
@@ -42,7 +40,7 @@
 
                         <div>
                             <input class="btn editProfileBtn" id="loginSubmitBtn" type="submit"
-                                   value="Enter">
+                                   th:value="#{lang.enter}">
                         </div>
                     </form>
                 </div>
@@ -51,5 +49,10 @@
         </div>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+</script>
+
+
 </body>
 </html>

@@ -10,5 +10,4 @@ import java.util.List;
 @Repository
 public interface TariffRepository extends JpaRepository<Tariff, Long> {
 
-    List<Tariff> findAllByServiceId(Long serviceId);
 }

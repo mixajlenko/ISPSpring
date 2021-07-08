@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Registration</title>
+    <title th:text="#{lang.registration}"></title>
     <link rel="stylesheet" th:href="@{/style.css}"/>
 </head>
 <body style="zoom: 80%">
@@ -11,8 +11,7 @@
         <div class="container">
             <div class="row">
                 <div class="slidertext">
-                    <h1>
-                        Registration
+                    <h1 th:text="#{lang.registration}">
                     </h1>
                     <br>
                 </div>
@@ -21,33 +20,31 @@
                         <a class="loginBtn" href="/">
                             Login
                         </a>
-                        <a class="loginBtn"
-                           href="/view/language/registration?language=RU">RU</a>
-                        <a class="loginBtn"
-                           href="/view/language/registration?language=EN">EN</a>
+                        <a th:href="@{/registration(lang='eng')}">EN</a>
+                        <a th:href="@{/registration(lang='ru')}">RU</a>
                     </div>
                     <form action="/registration" th:object="${userForm}" method="POST">
                         <div>
-                            <label>First name</label>
+                            <label th:text="#{lang.placeholderFirstName}"></label>
                             <input th:field="*{firstName}"/>
                         </div>
                         <div>
-                            <label>Second name</label>
+                            <label th:text="#{lang.placeholderSecondName}"></label>
                             <input th:field="*{secondName}"/>
                         </div>
                         <div>
-                            <label>email</label>
+                            <label th:text="#{lang.placeholderEmail}"></label>
                             <input type="email" th:field="*{username}"/>
                         </div>
                         <div>
-                            <label>phone</label>
+                            <label th:text="#{lang.phone}"></label>
                             <input type="text" th:field="*{phone}"/>
                         </div>
                         <div>
-                            <label>password</label>
+                            <label th:text="#{lang.password}"></label>
                             <input type="password" th:field="*{password}"/>
                         </div>
-                        <button type="submit" th:text="Submit">submit</button>
+                        <button type="submit" th:text="#{lang.submit}">submit</button>
                     </form>
 
                 </div>

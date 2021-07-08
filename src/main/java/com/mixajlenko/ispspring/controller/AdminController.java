@@ -25,8 +25,6 @@ public class AdminController {
     @Autowired
     private ServiceRepository serviceRepository;
 
-    @Autowired
-    private TariffRepository tariffRepository;
 
 
     @GetMapping("/adminPage")
@@ -71,12 +69,12 @@ public class AdminController {
         return "admin/servicePage";
     }
 
-    @GetMapping("/tariffPage")
-    public String tariffPage(@RequestParam("param") String param, Model model) {
-        List<Tariff> tariffs = tariffRepository.findAllByServiceId(Long.valueOf(param));
-        model.addAttribute("commandInterface", false);
-        model.addAttribute("tariffs", tariffs);
-        return "admin/servicePage";
-    }
+//    @GetMapping("/tariffPage")
+//    public String tariffPage(@RequestParam("param") String param, Model model) {
+//        List<Tariff> tariffs = tariffRepository.findAllByServiceId(Long.valueOf(param));
+//        model.addAttribute("commandInterface", false);
+//        model.addAttribute("tariffs", tariffs);
+//        return "admin/servicePage";
+//    }
 
 }
