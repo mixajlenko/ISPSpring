@@ -323,10 +323,15 @@ input.tariff1 {
 .tableTariffs#payment {
 }
 
-#funds {
-    text-align: left;
+.funds {
+    display: inline-block;
     font-size: 25px;
-    margin-bottom: 40px;
+}
+
+.inlineBlock {
+    display: flex;
+    padding: 20px;
+    margin: 10px 5px 10px 5px;
 }
 
 
@@ -613,7 +618,7 @@ input.tariff1 {
 
 .userInfoAdmin{
 
-    display: inline-grid;
+    display: inline-block;
     margin: 30px 100px 30px 100px;
     align-items: center;
     border: 2px solid #171717;
@@ -622,7 +627,7 @@ input.tariff1 {
     text-align: center;
     width: max-content;
     padding: 15px 20px 15px 20px;
-    height: 200px;
+    /*height: 200px;*/
 
 }
 

@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.*;
 import java.util.Set;
@@ -22,9 +23,11 @@ public class User implements UserDetails {
 
     @Column(name = "email")
     @Email
+    @NotBlank(message = "Email is mandatory")
     private String username;
 
-    @Size(min = 2, message = "No Less than 2 characters")
+    @Size(min = 8, message = "No Less than 8 characters")
+    @NotBlank(message = "Password is mandatory")
     private String password;
 
 
@@ -39,9 +42,11 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Tariff> tariffs;
 
+    @NotBlank(message = "First name is mandatory")
     @Size(min = 2, message = "No Less than 2 characters")
     private String firstName;
 
+    @NotBlank(message = "Second name is mandatory")
     @Size(min = 2, message = "No Less than 2 characters")
     private String secondName;
 
@@ -117,6 +122,5 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
-
 
 }

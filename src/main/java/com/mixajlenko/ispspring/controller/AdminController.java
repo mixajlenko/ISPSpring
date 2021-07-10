@@ -4,7 +4,7 @@ import com.mixajlenko.ispspring.entity.Service;
 import com.mixajlenko.ispspring.entity.Tariff;
 import com.mixajlenko.ispspring.entity.User;
 import com.mixajlenko.ispspring.repository.ServiceRepository;
-import com.mixajlenko.ispspring.repository.TariffRepository;
+
 import com.mixajlenko.ispspring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

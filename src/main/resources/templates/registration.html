@@ -45,6 +45,9 @@
                             <input type="password" th:field="*{password}"/>
                         </div>
                         <button type="submit" th:text="#{lang.submit}">submit</button>
+                        <div th:if="${er}">
+                            <h3>ERROR!!!</h3>
+                        </div>
                     </form>
 
                 </div>

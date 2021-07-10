@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ISPAdmin: New Client</title>
+    <title th:text="#{lang.iSPAdmin2}"></title>
     <link rel="stylesheet" th:href="@{/style.css}"/>
 </head>
 <body style="zoom: 80%">
@@ -12,24 +12,18 @@
 
         <div class="logoBlock">
             <div style="font-size: 16px; text-align: end;">
-                <a class="loginBtn"
-                   href="${pageContext.request.contextPath}/view/language/admin/manageUsers?language=RU">
-                    RU
-                </a>
-                <a class="loginBtn"
-                   href="${pageContext.request.contextPath}/view/language/admin/manageUsers?language=EN">
-                    EN
-                </a>
+                <a th:href="@{/manageUsers(lang='eng')}">EN</a>
+                <a th:href="@{/manageUsers(lang='ru')}">RU</a>
             </div>
             <p id="pageLogo">ISPAdmin</p>
             <div class="mainmenu">
                 <ul>
                     <li><a class="scroll-animite btn"
-                           href="/adminPage">Main Page</a></li>
+                           href="/adminPage" th:text="#{lang.mainPage}"></a></li>
                     <li><a class="scroll-animite btn"
-                           href="/servicePage">Services</a></li>
+                           href="/servicePage" th:text="#{lang.serviceMenu}"></a></li>
                     <li><a class="scroll-animite btn"
-                           href="/userPageAdmin">Clients</a></li>
+                           href="/userPageAdmin" th:text="#{lang.clients}"></a></li>
                     <li><a class="scroll-animite logOutBtn"
                            href="/logout">Log Out</a></li>
                 </ul>
@@ -46,38 +40,36 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="slidertext">
-                            <h1>
-                                Client Registration
+                            <h1 th:text="#{lang.clientRegistration}">
                             </h1>
                             <br>
-                            <p>
-                                Fill information about user
+                            <p th:text="#{lang.registerInfo}">
                             </p>
                         </div>
                     </div>
                     <div class="newTariff">
                         <form action="/manageUsers" th:object="${userForm}" method="POST">
                             <div>
-                                <label>First name</label>
+                                <label th:text="#{lang.placeholderFirstName}">First name</label>
                                 <input th:field="*{firstName}"/>
                             </div>
                             <div>
-                                <label>Second name</label>
+                                <label th:text="#{lang.placeholderSecondName}"></label>
                                 <input th:field="*{secondName}"/>
                             </div>
                             <div>
-                                <label>email</label>
+                                <label th:text="#{lang.placeholderEmail}"></label>
                                 <input type="email" th:field="*{username}"/>
                             </div>
                             <div>
-                                <label>phone</label>
+                                <label th:text="#{lang.phone}"></label>
                                 <input type="text" th:field="*{phone}"/>
                             </div>
                             <div>
-                                <label>password</label>
+                                <label th:text="#{lang.password}"></label>
                                 <input type="password" th:field="*{password}"/>
                             </div>
-                            <button type="submit" th:text="Submit">submit</button>
+                            <button type="submit" th:text="#{lang.submit}">submit</button>
                         </form>
                     </div>
                 </div>

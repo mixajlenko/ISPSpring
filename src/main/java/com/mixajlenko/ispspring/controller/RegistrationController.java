@@ -3,14 +3,17 @@ package com.mixajlenko.ispspring.controller;
 import com.mixajlenko.ispspring.entity.User;
 import com.mixajlenko.ispspring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class RegistrationController {
@@ -37,11 +40,6 @@ public class RegistrationController {
             return "admin/manageUsers";
         }
 
-//        if (!userForm.getPassword().equals(userForm.getPasswordConfirm())){
-//            model.addAttribute("passwordError", "Password isn't similar");
-//            return "registration";
-//        }
-
         if (!userService.saveUser(userForm)) {
             model.addAttribute("alreadyExist", true);
             return "admin/manageUsers";
@@ -51,23 +49,32 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser( @ModelAttribute("userForm") @Valid User userForm, BindingResult bindingResult, Model model) {
+    public String addUser(@Valid @ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("er", true);
             return "registration";
         }
-
-//        if (!userForm.getPassword().equals(userForm.getPasswordConfirm())){
-//            model.addAttribute("passwordError", "Password isn't similar");
-//            return "registration";
-//        }
 
         if (!userService.saveUser(userForm)) {
             model.addAttribute("alreadyExist", true);
             return "registration";
         }
 
-        return "redirect:/login";
+        return "redirect:/";
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
     }
 
 

@@ -3,145 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <title>ISPManager: Payments</title>
-  <link rel="stylesheet" th:href="@{/style.css}"/>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
 </head>
 <body style="zoom: 80%">
 <div id="home"></div>
 <div class="ournet-inter-area">
-  <header id="header" class="header-area">
+    <header id="header" class="header-area">
 
-    <div class="logoBlock">
-      <div style="font-size: 16px; text-align: end;">
-        <a class="loginBtn" href="${pageContext.request.contextPath}/view/language/client/paymentSystemPage?language=RU">
-          RU
-        </a>
-        <a class="loginBtn" href="${pageContext.request.contextPath}/view/language/client/paymentSystemPage?language=EN">
-          EN
-        </a>
-      </div>
-      <p id="pageLogo">ISPManager</p>
-      <div class="mainmenu">
-        <ul class="topChange">
-          <li><a class="btn"
-                 href="/clientPage">
-            Main page
-          </a></li>
-          <li><a class="btn"
-                 href="/servicePage">
-            Services
-            <i
-                    class="fa fa-angle-down"></i></a>
-            <!--                        <ul class="subChange" th:each="service : ${services}">-->
-            <!--                                <li>-->
-            <!--                                  <a href="/view/client/servicePage?item=${service.name}&serviceId=${item.id}"><span th:text="${service.name}"></span></a>-->
-            <!--                                </li>-->
-            <!--                        </ul>-->
-          </li>
-          <li><a class="btn"
-                 href="/paymentSystem">
-            Payments
-          </a></li>
-          <li><a class="btn"
-                 href="#">
-            Manage profile
-            <i class="fa fa-angle-down"></i></a>
-            <ul class="subChange" id="profChange">
-              <li>
-                <a th:href="@{/manage(param='manageName')}">
-                  Name
-                </a>
-              </li>
-              <li>
-                <a href="/profile?change=email">
-                  Email
-                </a>
-              </li>
-              <li>
-                <a th:href="@{/manage(param='managePhone')}">
-                  Phone
-                </a>
-              </li>
-              <li>
-                <a href="/profile?change=password">
-                  Password
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li><a class="btn" href="/supportPage">
-            Support
-          </a>
-          </li>
-          <li><a class="logOutBtn" href="/logout">
-            Log Out
-          </a></li>
-        </ul>
-      </div>
-    </div>
-    <div class ="minInfo">
-      <div id="time"><span id="datetime"></span></div>
-    </div>
-  </header>
-  <!-- Slider area Start -->
-  <div class="slider-area">
-    <div class="slider-bg text-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="slidertext">
-              <h1>Payment System</h1>
-              <br>
-              <p>Refund your wallet</p>
-              <br>
+        <div class="logoBlock">
+            <div style="font-size: 16px; text-align: end;">
+                <a th:href="@{/paymentSystem(lang='eng')}">EN</a>
+                <a th:href="@{/paymentSystem(lang='ru')}">RU</a>
             </div>
-          </div>
-          <div class="tableTariffs" id="payment">
-            <div class="payForm">
-              <div class="pay">
-                <p id="funds">Your funds: <span th:text="${funds}"></span> USD</p>
-                <form id="payField" align="center"
-                      action="/paymentSystem" th:object="${payment}" method="POST">
-                  <p>
-                    <label><input placeholder="0 USD" th:field="*{bill}"/></label>
-                  </p>
-                  <input class="btn" id="payBtn" type="submit"
-                         value="Pay">
-                </form>
-              </div>
-
-              <div>
-                <table class="table1 sortable" id="paymentTable">
-                  <thead>
-                  <tr>
-                    <th class="sorttable_mmdd">Date</th>
-                    <th class="sorttable_numeric">Status</th>
-                    <th class="sorttable_numeric">Bill</th>
-                    <th class="sorttable_numeric">Balance</th>
-                    <th class="sorttable_alpha">Type</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="highlight" th:each=" item : ${paymentHistory}">
-                      <td th:text="${item.date}"></td>
-                      <td th:if="${item.status == 0}">
-                          <p class="activeStatus">Accepted</p>
-                      <td th:if="${item.status == 1}">
-                          <p class="stoppedStatus">Declined</p>
-                      </td>
-                      <td th:text="${item.bill}"></td>
-                      <td th:text="${item.balance}"></td>
-                        <td th:if="${item.type == 'Pay'}">Pay</td>
-                        <td th:if="${item.type == 'Pay for service'}">Pay for service</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <p id="pageLogo">ISPManager</p>
+            <div class="mainmenu">
+                <ul class="topChange">
+                    <li><a class="btn" href="/clientPage" th:text="#{lang.mainPage}"></a></li>
+                    <li><a class="btn" href="/servicePage" th:text="#{lang.serviceMenu}"><i
+                            class="fa fa-angle-down"></i></a>
+                        <!--                        <ul class="subChange" th:each="service : ${services}">-->
+                        <!--                                <li>-->
+                        <!--                                  <a href="/view/client/servicePage?item=${service.name}&serviceId=${item.id}"><span th:text="${service.name}"></span></a>-->
+                        <!--                                </li>-->
+                        <!--                        </ul>-->
+                    </li>
+                    <li><a class="btn" href="/paymentSystem" th:text="#{lang.payments}"></a></li>
+                    <li><a class="btn"
+                           href="#" th:text="#{lang.manageProfile}">
+                        <i class="fa fa-angle-down"></i></a>
+                        <ul class="subChange" id="profChange">
+                            <li>
+                                <a th:href="@{/manage(param='manageName')}" th:text="#{lang.name}">
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/manage(param='manageEmail')}" th:text="#{lang.placeholderEmail}">
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/manage(param='managePhone')}" th:text="#{lang.phone}">
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/manage(param='managePassword')}" th:text="#{lang.password}">
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a class="btn" href="/supportPage" th:text="#{lang.support}">
+                    </a>
+                    </li>
+                    <li><a class="logOutBtn" href="/logout">
+                        Log Out
+                    </a></li>
+                </ul>
             </div>
-          </div>
         </div>
-      </div>
+        <div class="minInfo">
+            <div id="time"><span id="datetime"></span></div>
+        </div>
+    </header>
+    <!-- Slider area Start -->
+    <div class="slider-area">
+        <div class="slider-bg text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="slidertext">
+                            <h1 th:text="#{lang.paymentSystem}"></h1>
+                            <br>
+                            <p th:text="#{lang.basicInfoPayment}"></p>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="tableTariffs" id="payment">
+                        <div class="payForm">
+                            <div class="pay">
+                                <p class="funds" th:text="#{lang.yourFunds}"></p>
+                                <p class="funds">: <span th:text=" ${funds}"> </span> USD</p>
+                                <form id="payField" align="center"
+                                      action="/paymentSystem" th:object="${payment}" method="POST">
+                                    <p>
+                                        <label><input placeholder="0 USD" th:field="*{bill}"/></label>
+                                    </p>
+                                    <input class="btn" id="payBtn" type="submit"
+                                           th:value="#{lang.yourFunds}">
+                                </form>
+                            </div>
+
+                            <div>
+                                <table class="table1 sortable" id="paymentTable">
+                                    <thead>
+                                    <tr>
+                                        <th class="sorttable_mmdd" th:text="#{lang.date}"></th>
+                                        <th class="sorttable_numeric" th:text="#{lang.status}"></th>
+                                        <th class="sorttable_numeric" th:text="#{lang.bill}"></th>
+                                        <th class="sorttable_numeric" th:text="#{lang.balance}"></th>
+                                        <th class="sorttable_alpha" th:text="#{lang.type}"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="highlight" th:each=" item : ${paymentHistory}">
+                                        <td th:text="${item.date}"></td>
+                                        <td th:if="${item.status == 0}">
+                                            <p class="activeStatus" th:text="#{lang.accepted}"></p>
+                                        <td th:if="${item.status == 1}">
+                                            <p class="stoppedStatus" th:text="#{lang.declined}"></p>
+                                        </td>
+                                        <td th:text="${item.bill}"></td>
+                                        <td th:text="${item.balance}"></td>
+                                        <td th:if="${item.type == 'Pay'}" th:text="#{lang.typeTable1}"></td>
+                                        <td th:if="${item.type == 'Pay for service'}" th:text="#{lang.typeTable2}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <script src="${pageContext.request.contextPath}/styles/js/time.js"></script>

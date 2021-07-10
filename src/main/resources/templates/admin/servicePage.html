@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ISPAdmin: Services</title>
+    <title th:text="#{lang.iSPAdmin3}"></title>
     <link rel="stylesheet" th:href="@{/style.css}"/>
 
 </head>
@@ -13,22 +13,18 @@
 
         <div class="logoBlock">
             <div style="font-size: 16px; text-align: end;">
-                <a class="loginBtn" href="${pageContext.request.contextPath}/view/language/admin/managePlan?language=RU">
-                    RU
-                </a>
-                <a class="loginBtn" href="${pageContext.request.contextPath}/view/language/admin/managePlan?language=EN">
-                    EN
-                </a>
+                <a th:href="@{/servicePage(lang='eng')}">EN</a>
+                <a th:href="@{/servicePage(lang='ru')}">RU</a>
             </div>
             <p id="pageLogo">ISPAdmin</p>
             <div class="mainmenu">
                 <ul>
                     <li><a class="scroll-animite btn"
-                           href="/adminPage">Main Page</a></li>
+                           href="/adminPage" th:text="#{lang.mainPage}"></a></li>
                     <li><a class="scroll-animite btn"
-                           href="/servicePage">Services</a></li>
+                           href="/servicePage" th:text="#{lang.serviceMenu}"></a></li>
                     <li><a class="scroll-animite btn"
-                           href="/userPageAdmin">Clients</a></li>
+                           href="/userPageAdmin" th:text="#{lang.clients}"></a></li>
                     <li><a class="scroll-animite logOutBtn"
                            href="/logout">Log Out</a></li>
                 </ul>
@@ -45,9 +41,9 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="slidertext">
-                            <h1>Service Menu</h1>
+                            <h1 th:text="#{lang.serviceMenu}"></h1>
                             <br>
-                            <p>Manage tariffs and plans</p>
+                            <p th:text="#{lang.serviceMenuInfo}"></p>
                         </div>
                     </div>
                     <div class="serviceTable">
