@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ISPAdmin: Tariffs</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
 </head>
 <body style="zoom: 80%">
 <div id="home"></div>
@@ -37,46 +38,55 @@
             <div class="container">
                 <div class="row">
 
-                    <!--                    <c:if test="${commandInterface}">-->
-                    <!--                        <div class="col-lg-12">-->
-                    <!--                            <div class="slidertext">-->
-                    <!--                                <h1>Tariffs</h1>-->
-                    <!--                                <br>-->
-                    <!--                                <p>Update Tariff</p>-->
-                    <!--                            </div>-->
-                    <!--                        </div>-->
-                    <!--                        <div class="newTariff">-->
-                    <!--                            <form method="post"-->
-                    <!--                                  action="${pageContext.request.contextPath}/view/admin/managePlan?param=${param.get('param')}&id=${param.get("id")}&command=updateCommand&redirect=true">-->
-                    <!--                            <p>-->
-                    <!--                                <label>-->
-                    <!--                                    <input class="tariff1" type="text" value="Name"-->
-                    <!--                                    name="name">-->
-                    <!--                                </label>-->
-                    <!--                            </p>-->
-                    <!--                            <p>-->
-                    <!--                                <label>-->
-                    <!--                                    <input class="tariff1" type="text" value="${param.get("description")}" required-->
-                    <!--                                    placeholder="Description"-->
-                    <!--                                    name="description">-->
-                    <!--                                </label>-->
-                    <!--                            </p>-->
-                    <!--                            <p>-->
-                    <!--                                <label>-->
-                    <!--                                    <input class="tariff1" type="text" value="${param.get("price")}" required-->
-                    <!--                                    placeholder="<fmt:message key="tariffPrice"/>"-->
-                    <!--                                    name="price">-->
-                    <!--                                </label>-->
-                    <!--                            </p>-->
-                    <!--                            <input id="submitBtn" type="submit"-->
-                    <!--                                   onclick="return confirm('<fmt:message key="updateConfirm"/>')"-->
-                    <!--                            value="<fmt:message key="update"/>">-->
-                    <!--                            </form>-->
-                    <!--                        </div>-->
-                    <!--                    </c:if>-->
+                    <div th:if="${commandInterface}">
+                        <div class="col-lg-12">
+                            <div class="slidertext">
+                                <h1>Tariffs</h1>
+                                <br>
+                                <p>Update Tariff</p>
+                            </div>
+                        </div>
+                        <div class="newTariff">
+
+
+                            <form th:action="@{/managePlan(service=${service})}" th:object="${tariffUpdate}"
+                                  method="POST">
+                                <div>
+                                    <p>
+                                        <label>
+                                            <input class="tariff1" type="text" th:field="*{name}"
+                                                   th:placeholder="#{lang.tariffName}">
+                                        </label>
+                                    </p>
+                                </div>
+                                <div>
+                                    <p>
+                                        <label>
+                                            <input class="tariff1" type="text" th:field="*{description}"
+                                                   th:placeholder="#{lang.tariffDescription}">
+                                        </label>
+                                    </p>
+                                </div>
+                                <div>
+                                    <p>
+                                        <label>
+                                            <input class="tariff1" type="text" th:field="*{price}"
+                                                   th:placeholder="#{lang.tariffPrice}">
+                                        </label>
+                                    </p>
+                                </div>
+                                <div>
+                                    <button class="btn editProfileBtn" id="loginSubmitBtn" type="submit"
+                                            th:text="#{lang.submit}">submit
+                                    </button>
+                                    <input type="hidden" th:field="*{id}"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
 
                     <div th:if="${!commandInterface}">
-                        <div class="col-lg-12" >
+                        <div class="col-lg-12">
                             <div class="slidertext">
                                 <h1>Tariffs</h1>
                                 <br>
@@ -97,30 +107,33 @@
                                 </thead>
                                 <tbody>
 
-                                    <tr class="highlight" th:each="item : ${tariffs}">
-                                        <td><p style="font-size: 16px; text-align: center" th:text="${item.id}"></p></td>
-                                        <td  th:text="${item.name}"></td>
-                                        <td  th:text="${item.description}"></td>
-                                        <td  th:text="${item.price}"></td>
-                                        <td>
-                                            <a class="updateButton" th:href="@{/managePlan(id=${item.id},param=${param.get('param')},name=${item.name},description=${item.description},price=${item.price},command='update')}">
-                                                Update
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a class="deleteButton" th:href="@{/managePlan(id=${item.id},param=${param.get('param')},command='delete')}"
-                                               onclick="return confirm('Delete?')">
-                                            Delete
-                                            </a>
-                                        </td>
-                                    </tr>
+                                <tr class="highlight" th:each="item : ${tariffs}">
+                                    <td><p style="font-size: 16px; text-align: center" th:text="${item.id}"></p></td>
+                                    <td th:text="${item.name}"></td>
+                                    <td th:text="${item.description}"></td>
+                                    <td th:text="${item.price}"></td>
+                                    <td>
+                                        <a class="updateButton"
+                                           th:href="@{/managePlan(id=${item.id},service=${service})}">
+                                            Update
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <form th:action="@{/deleteTariff(id=${item.id},service=${service})}"
+                                              method="post">
+                                            <button class="deleteButton" type="submit"
+                                                    th:text="#{lang.delete}"></button>
+                                        </form>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                             <br>
                             <br>
-                            <form class="w3-container" align="center" th:action="@{/addTariff(param=${param.get('param')})}" method="post">
-                                <input class="btn btnAdd" type="submit" name="add" value="Add">
-                            </form>
+                            <a class="w3-container" align="center"
+                               th:href="@{/newTariff(id=${param.get('param')})}">
+                                new
+                            </a>
                         </div>
                     </div>
 

@@ -23,13 +23,34 @@ public class Tariff {
 
     @Transient
     @ManyToOne(fetch=FetchType.EAGER)
-    private Service service;
+    private Svc svc;
 
     @Transient
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<User> users;
 
     public Tariff() {
+    }
+
+    public Tariff(String name, String description, int price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
+    public Tariff(String name, String description, int price, Svc svc) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.svc = svc;
+    }
+
+    public Tariff(String name, String description, int price, Svc svc, Set<User> users) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.svc = svc;
+        this.users = users;
     }
 
     public Tariff(Long id, String name, String description, int price) {
@@ -39,12 +60,12 @@ public class Tariff {
         this.price = price;
     }
 
-    public Tariff(Long id, String name, String description, int price, Service service, Set<User> users) {
+    public Tariff(Long id, String name, String description, int price, Svc svc, Set<User> users) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.service = service;
+        this.svc = svc;
         this.users = users;
     }
 }

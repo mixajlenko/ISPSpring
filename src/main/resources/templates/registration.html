@@ -25,34 +25,77 @@
                     </div>
                     <form action="/registration" th:object="${userForm}" method="POST">
                         <div>
-                            <label th:text="#{lang.placeholderFirstName}"></label>
-                            <input th:field="*{firstName}"/>
+                            <p>
+                            <label>
+                            <input class="profileEditorFields loginField" type="text" th:field="*{firstName}" th:placeholder="#{lang.placeholderFirstName}"/>
+                            </label>
+                            </p>
+                            <div>
+                            <span class="validationError"
+                                  th:if="${#fields.hasErrors('firstName')}"
+                                  th:errors="*{firstName} " ></span>
+                            </div>
                         </div>
                         <div>
-                            <label th:text="#{lang.placeholderSecondName}"></label>
-                            <input th:field="*{secondName}"/>
+                            <p>
+                            <label>
+                            <input class="profileEditorFields loginField" type="text" th:field="*{secondName}" th:placeholder="#{lang.placeholderSecondName}"/>
+                            </label>
+                            </p>
+                            <div>
+                            <span class="validationError"
+                                  th:if="${#fields.hasErrors('secondName')}"
+                                  th:errors="*{secondName}"></span>
+                            </div>
                         </div>
                         <div>
-                            <label th:text="#{lang.placeholderEmail}"></label>
-                            <input type="email" th:field="*{username}"/>
+                            <p>
+                            <label>
+                            <input class="profileEditorFields loginField" type="text" th:field="*{username}" th:placeholder="#{lang.placeholderEmail}"/>
+                            </label>
+                            </p>
+                            <div>
+                            <span class="validationError"
+                                  th:if="${#fields.hasErrors('username')}"
+                                  th:errors="*{username}"></span>
+                            </div>
                         </div>
                         <div>
-                            <label th:text="#{lang.phone}"></label>
-                            <input type="text" th:field="*{phone}"/>
+                            <p>
+                            <label>
+                            <input class="profileEditorFields loginField" type="text" th:field="*{phone}" th:placeholder="#{lang.phone}"/>
+                            </label>
+                            </p>
+                            <div>
+                            <span class="validationError"
+                                  th:if="${#fields.hasErrors('phone')}"
+                                  th:errors="*{phone}"></span>
+                            </div>
                         </div>
                         <div>
-                            <label th:text="#{lang.password}"></label>
-                            <input type="password" th:field="*{password}"/>
+                            <p>
+                            <label>
+                            <input class="profileEditorFields loginField" type="password" th:field="*{password}" th:placeholder="#{lang.password}"/>
+                            </label>
+                            </p>
+                            <div>
+                            <span class="validationError"
+                                  th:if="${#fields.hasErrors('password')}"
+                                  th:errors="*{password}"></span>
+                            </div>
                         </div>
-                        <button type="submit" th:text="#{lang.submit}">submit</button>
-                        <div th:if="${er}">
-                            <h3>ERROR!!!</h3>
+                        <div>
+                            <button class="btn editProfileBtn" id="loginSubmitBtn" type="submit" th:text="#{lang.submit}">submit</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
+
+
+
+
+
     </div>
 </div>
 </body>

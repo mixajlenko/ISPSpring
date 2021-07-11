@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "t_service")
-public class Service {
+public class Svc {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,16 +21,16 @@ public class Service {
     @OneToMany(fetch=FetchType.EAGER)
     private List<Tariff> tariffs;
 
-    public Service() {
+    public Svc() {
     }
 
-    public Service(Long id, String name, String description) {
+    public Svc(Long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
     }
 
-    public Service(Long id, String name, String description, List<Tariff> tariffs) {
+    public Svc(Long id, String name, String description, List<Tariff> tariffs) {
         this.id = id;
         this.name = name;
         this.description = description;

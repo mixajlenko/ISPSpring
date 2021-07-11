@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.*;
 import java.util.Set;
@@ -22,11 +23,13 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "email")
-    @Email
+    @Pattern(regexp = "^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;" +
+            ":\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\." +
+            "[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$", message = "{lang.emailError}")
     @NotBlank(message = "Email is mandatory")
     private String username;
 
-    @Size(min = 8, message = "No Less than 8 characters")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$", message = "{lang.passwordError}")
     @NotBlank(message = "Password is mandatory")
     private String password;
 
@@ -43,14 +46,14 @@ public class User implements UserDetails {
     private Set<Tariff> tariffs;
 
     @NotBlank(message = "First name is mandatory")
-    @Size(min = 2, message = "No Less than 2 characters")
+    @Size(min = 2, message = "{lang.firstNameError}")
     private String firstName;
 
     @NotBlank(message = "Second name is mandatory")
-    @Size(min = 2, message = "No Less than 2 characters")
+    @Size(min = 2, message = "{lang.secondNameError}")
     private String secondName;
 
-    @Size(min = 10, message = "No Less than 10 digits")
+    @Size(min = 10, message = "{lang.phoneError}")
     private String phone;
 
     private int wallet;

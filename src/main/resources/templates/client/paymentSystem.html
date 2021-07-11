@@ -21,9 +21,9 @@
                     <li><a class="btn" href="/clientPage" th:text="#{lang.mainPage}"></a></li>
                     <li><a class="btn" href="/servicePage" th:text="#{lang.serviceMenu}"><i
                             class="fa fa-angle-down"></i></a>
-                        <!--                        <ul class="subChange" th:each="service : ${services}">-->
+                        <!--                        <ul class="subChange" th:each="svc : ${services}">-->
                         <!--                                <li>-->
-                        <!--                                  <a href="/view/client/servicePage?item=${service.name}&serviceId=${item.id}"><span th:text="${service.name}"></span></a>-->
+                        <!--                                  <a href="/view/client/servicePage?item=${svc.name}&serviceId=${item.id}"><span th:text="${svc.name}"></span></a>-->
                         <!--                                </li>-->
                         <!--                        </ul>-->
                     </li>
@@ -113,7 +113,7 @@
                                         <td th:text="${item.bill}"></td>
                                         <td th:text="${item.balance}"></td>
                                         <td th:if="${item.type == 'Pay'}" th:text="#{lang.typeTable1}"></td>
-                                        <td th:if="${item.type == 'Pay for service'}" th:text="#{lang.typeTable2}"></td>
+                                        <td th:if="${item.type == 'Pay for svc'}" th:text="#{lang.typeTable2}"></td>
                                     </tr>
                                     </tbody>
                                 </table>

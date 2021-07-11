@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface TariffRepository extends JpaRepository<Tariff, Long> {
 
+    Tariff findByName(String name);
+
 }

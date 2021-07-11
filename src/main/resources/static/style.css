@@ -631,6 +631,15 @@ input.tariff1 {
 
 }
 
+.displayTable{
+    display: grid;
+}
+
+
+span.validationError {
+    color: red;
+}
+
 
 .userInfo #plansBlock {
     display: grid;
@@ -772,7 +781,8 @@ input.tariff1 {
     text-align: center;
     width: fit-content;
     padding: 3%;
-    margin: 20px auto 30px auto
+    margin: 20px auto 30px auto;
+    line-height: normal;
 }
 
 .tableTariffs#registerForm {
