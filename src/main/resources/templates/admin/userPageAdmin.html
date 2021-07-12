@@ -79,21 +79,18 @@
                                     </td>
                                     <td th:if="${item.statuses[0].id == 2}">
                                         <form  th:action="@{/userPageAdmin(action='block',userId=${item.id})}" method="post">
-                                            <button class="updateButton" type="submit" th:text="#{lang.block}"></button>
+                                            <button class="updateButton" type="submit" th:onclick="'return confirm(\'' + #{lang.blockClientConfirm} + '\');'" th:text="#{lang.block}"></button>
                                         </form>
                                     </td>
                                     <td th:if="${item.statuses[0].id == 1}">
                                         <form  th:action="@{/userPageAdmin(action='unblock',userId=${item.id})}" method="post">
-                                            <button class="updateButton" type="submit" th:text="#{lang.unblock}"></button>
+                                            <button class="updateButton" type="submit" th:onclick="'return confirm(\'' + #{lang.unblockClientConfirm} + '\');'" th:text="#{lang.unblock}"></button>
                                         </form>
                                     </td>
                                     <td>
                                         <form  th:action="@{/userPageAdmin(action='delete',userId=${item.id})}" method="post">
-                                            <button class="deleteButton" type="submit" th:onclick="return confirm('1' + #{lang.delete})" th:text="#{lang.delete}"></button>
+                                            <button class="deleteButton" type="submit" th:onclick="'return confirm(\'' + #{lang.deleteClientConfirm} + '\');'" th:text="#{lang.delete}"></button>
                                         </form>
-<!--                                        <a class="deleteButton"-->
-<!--                                           href="${pageContext.request.contextPath}/view/admin/userPageAdmin?command=delete&Uid=${item.id}"-->
-<!--                                           onclick="return confirm('')">Delete</a>-->
                                     </td>
                                     <td>
                                         <a class="deleteButton" id="moreBtn"
