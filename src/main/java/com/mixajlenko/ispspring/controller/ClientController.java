@@ -1,7 +1,11 @@
 package com.mixajlenko.ispspring.controller;
 
 import com.mixajlenko.ispspring.entity.Payment;
+import com.mixajlenko.ispspring.entity.Svc;
+import com.mixajlenko.ispspring.entity.Tariff;
 import com.mixajlenko.ispspring.entity.User;
+import com.mixajlenko.ispspring.repository.ServiceRepository;
+import com.mixajlenko.ispspring.repository.TariffRepository;
 import com.mixajlenko.ispspring.repository.UserRepository;
 import com.mixajlenko.ispspring.service.PaymentService;
 import com.mixajlenko.ispspring.service.UserService;
@@ -10,6 +14,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ClientController {
@@ -22,6 +29,12 @@ public class ClientController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ServiceRepository serviceRepository;
+
+    @Autowired
+    TariffRepository tariffRepository;
 
     @GetMapping("/clientPage")
     public String clientPage() {
@@ -113,5 +126,16 @@ public class ClientController {
         return "client/supportPage";
     }
 
+
+    @GetMapping("/servicePageClient")
+    public String servicePage(Model model) {
+        List<Svc> svcs = serviceRepository.findAll();
+        List<Tariff> tariffs = tariffRepository.findAll();
+        List<Tariff> complex = tariffRepository.findAll().stream().filter(t -> t.getName().contains("Plan")).collect(Collectors.toList());
+        model.addAttribute("services", svcs);
+        model.addAttribute("tariffs", tariffs);
+        model.addAttribute("complex", complex);
+        return "client/servicePageClient";
+    }
 
 }

@@ -72,11 +72,11 @@ public class AdminController {
         return "redirect:/userPageAdmin";
     }
 
-    @GetMapping("/servicePage")
+    @GetMapping("/servicePageAdmin")
     public String servicePage(Model model) {
         List<Svc> svcs = serviceRepository.findAll();
         model.addAttribute("services", svcs);
-        return "admin/servicePage";
+        return "servicePageAdmin";
     }
 
     @GetMapping("/tariffPage")

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+
+</head>
+<body style="zoom: 80%">
+<div id="home"></div>
+<div class="ournet-inter-area">
+    <header id="header" class="header-area">
+
+        <div class="logoBlock">
+            <div style="font-size: 16px; text-align: end;">
+                <a class="loginBtn"
+                   href="${pageContext.request.contextPath}/view/language/client/servicePage?language=RU">
+                    RU
+                </a>
+                <a class="loginBtn"
+                   href="${pageContext.request.contextPath}/view/language/client/servicePage?language=EN">
+                    EN
+                </a>
+            </div>
+            <p id="pageLogo">ISPManager</p>
+            <div class="mainmenu">
+                <ul class="topChange">
+                    <li><a class="btn" href="/clientPage" th:text="#{lang.mainPage}"></a></li>
+                    <li><a class="btn" href="/servicePageClient" th:text="#{lang.serviceMenu}"><i
+                            class="fa fa-angle-down"></i></a>
+                        <!--                        <ul class="subChange" th:each="service : ${services}">-->
+                        <!--                                <li>-->
+                        <!--                                  <a href="/view/client/servicePage?item=${service.name}&serviceId=${item.id}"><span th:text="${service.name}"></span></a>-->
+                        <!--                                </li>-->
+                        <!--                        </ul>-->
+                    </li>
+                    <li><a class="btn" href="/paymentSystem" th:text="#{lang.payments}"></a></li>
+                    <li><a class="btn"
+                           href="#" th:text="#{lang.manageProfile}">
+                        <i class="fa fa-angle-down"></i></a>
+                        <ul class="subChange" id="profChange">
+                            <li>
+                                <a th:href="@{/manage(param='manageName')}" th:text="#{lang.name}">
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/manage(param='manageEmail')}" th:text="#{lang.placeholderEmail}">
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/manage(param='managePhone')}" th:text="#{lang.phone}">
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/manage(param='managePassword')}" th:text="#{lang.password}">
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a class="btn" href="/supportPage" th:text="#{lang.support}">
+                    </a>
+                    </li>
+                    <li><a class="logOutBtn" href="/logout">
+                        Log Out
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="minInfo">
+            <div id="time"><span id="datetime"></span></div>
+        </div>
+    </header>
+    <!-- Slider area Start -->
+    <div class="slider-area">
+        <div class="slider-bg text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="slidertext">
+                            <h1 th:text="#{lang.services}"></h1>
+                            <br>
+                            <p th:text="#{lang.basicInfoService}"></p>
+                        </div>
+                    </div>
+                    <div class="plansBlock">
+                        <div class="plansList singePlan">
+                            <h4 th:text="#{lang.complex}"></h4>
+                            <div th:each="complexTariff : ${complex}">
+                                <a class="plan"
+                                   href="${pageContext.request.contextPath}/view/client/servicePage?tariffId=${complexTariff.id}"
+                                >
+                                    <!--                  onclick="return confirm('<fmt:message key="subscribeSubmit1"/> ${complexTariff.name} <fmt:message key="subscribeSubmit2"/>')"-->
+                                    <p class="planText" th:text="${complexTariff.name}"></p>
+                                    <p class="planInfo" th:text="${complexTariff.description}">, </p>
+                                    <p class="planInfo" th:text="${complexTariff.price}"> USD/mo</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="plansList singePlan">
+                            <h4 th:text="#{lang.single}"></h4>
+                            <div th:each="item : ${services}">
+                                <a class="btn" id="serv"
+                                   href="${pageContext.request.contextPath}/view/client/servicePage?item=${item.name}&serviceId=${item.id}"
+                                   th:text="${item.name}"></a>
+                            </div>
+                        </div>
+                        <div>
+                            Download all:
+                            <!--              <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=pdf&serviceName=All&serviceId=empty">PDF</a>-->
+                            <!--              <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=txt&serviceName=All&serviceId=empty">TXT</a>-->
+                            <!--              <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=docx&serviceName=All&serviceId=empty">DOCX</a>-->
+                            <!--              <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=csv&serviceName=All&serviceId=empty">CSV</a>-->
+                        </div>
+                        <h4 style="color: red; margin: 50px 0 0 0" th:if="${alreadyExistTariff}"
+                            th:text="#{lang.alreadySub}"></h4>
+                        <h4 style="color: green; margin: 50px 0 0 0" th:if="${subSuccess}"
+                            th:text="#{lang.successfullySub}"></h4>
+                        <h4 style="color: red; margin: 50px 0 0 0" th:if="${subFail}"
+                            th:text="#{lang.failSub}"></h4>
+
+                        <div th:if="${showTariffs}">
+                            <div class="serviceBlock">
+                                <div class="mainmenuSort">
+                                    <ul class="topSort">
+                                        <li><a class="btnSort" th:text="#{lang.sort}"></a>
+                                            <ul class="subSort">
+                                                <li>
+                                                    <a href="${pageContext.request.contextPath}/view/client/servicePage?item=${item}&serviceId=${paramId}&sort=name"
+                                                       th:text="#{lang.az}"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="${pageContext.request.contextPath}/view/client/servicePage?item=${item}&serviceId=${paramId}&sort=nameR"
+                                                       th:text="#{lang.za}"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="${pageContext.request.contextPath}/view/client/servicePage?item=${item}&serviceId=${paramId}&sort=price"
+                                                       th:text="#{lang.tariffPrice}"></a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <table class="tableService sortable">
+                                    <thead>
+                                    <tr>
+                                        <th class="sorttable_alpha" th:text="#{lang.name}"></th>
+                                        <th class="sorttable_alpha" th:text="#{lang.tariffDescription}"></th>
+                                        <th class="sorttable_numeric" th:text="#{lang.tariffPrice}"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr class="highlight" th:each="item : ${tariffs}">
+                                            <td th:text="${item.name}"></td>
+                                            <td>
+                                                <div id="descDiv">${item.description}</div>
+                                            </td>
+                                            <td th:text="${item.price}"></td>
+                                            <td id="endTd"><a class="updateButton" id="subscribeButton"
+                                                              href="${pageContext.request.contextPath}/view/client/servicePage?tariffId=${item.id}"
+                                                              th:text="#{lang.subscribe}"></a>
+                                                <!--                          onclick="return confirm('<fmt:message key="subscribeSubmit1"/> ${item.name} <fmt:message key="subscribeSubmit2"/>')"-->
+                                            </td>
+                                        </tr>
+                                    Download:
+                                    <!--                    <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=pdf&serviceId=${param.get("serviceId")}&serviceName=${param.get("item")}">PDF</a>-->
+                                    <!--                    <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=txt&serviceId=${param.get("serviceId")}&serviceName=${param.get("item")}">TXT</a>-->
+                                    <!--                    <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=docx&serviceId=${param.get("serviceId")}&serviceName=${param.get("item")}">DOCX</a>-->
+                                    <!--                    <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=csv&serviceId=${param.get("serviceId")}&serviceName=${param.get("item")}">CSV</a>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script src="${pageContext.request.contextPath}/styles/js/time.js"></script>-->
+<!--<script src="${pageContext.request.contextPath}/styles/js/jquery-3.2.1.min.js"></script>-->
+<!--<script src="${pageContext.request.contextPath}/styles/js/rowLight.js"></script>-->
+<!--<script src="${pageContext.request.contextPath}/styles/js/sorttable.js"></script>-->
+</body>
+</html>
