@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.*;
@@ -37,20 +38,12 @@ public class User implements UserDetails {
     @NotBlank(message = "Password is mandatory")
     private String password;
 
-
     @ManyToMany(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
 
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<Status> statuses;
-
-
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    private Set<Tariff> tariffs;
+    @NotNull
+    private boolean status;
 
     @NotBlank(message = "First name is mandatory")
     @Size(min = 2, message = "{lang.firstNameError}")
@@ -65,11 +58,6 @@ public class User implements UserDetails {
 
     private int wallet;
 
-
-    public void setStatuses(Status status) {
-        this.statuses = new ArrayList<>();
-        this.statuses.add(status);
-    }
 
     @Override
     public String getUsername() {

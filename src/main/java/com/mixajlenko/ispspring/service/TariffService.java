@@ -1,5 +1,6 @@
 package com.mixajlenko.ispspring.service;
 
+import com.mixajlenko.ispspring.dto.TariffInfoForClientDTO;
 import com.mixajlenko.ispspring.dto.TariffsByServiceDto;
 import com.mixajlenko.ispspring.entity.*;
 import com.mixajlenko.ispspring.entity.Svc;
@@ -56,6 +57,17 @@ public class TariffService {
             return true;
         }
         return false;
+    }
+
+    public TariffInfoForClientDTO findTariffById (Long tariffId){
+        TariffInfoForClientDTO tariffDto = new TariffInfoForClientDTO();
+        Tariff tariff = tariffRepository.getById(tariffId);
+
+        tariffDto.setName(tariff.getName());
+        tariffDto.setPrice(tariff.getPrice());
+        tariffDto.setDescription(tariff.getDescription());
+
+        return tariffDto;
     }
 
     public List<TariffsByServiceDto> allTariffsBySvcId(Long id){

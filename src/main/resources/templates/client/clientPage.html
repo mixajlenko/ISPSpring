@@ -88,7 +88,7 @@
                         </div>
                     </div>
                     <div class="mainPageBlocks">
-                        <div class="serviceBlock" id="clientMainPageBlock1" th:if="${!showTariff}">
+                        <div class="serviceBlock" id="clientMainPageBlock1">
                             <h4>
                                 Profile info
                             </h4>
@@ -96,137 +96,143 @@
                                 Name :
                             </p>
                             <br>
-                            <p th:text="${user.firstName}"></p>
-                            <p th:text="${user.secondName}"></p>
+                            <p th:text="${session.user.firstName}"></p>
+                            <p th:text="${session.user.secondName}"></p>
                             <br>
                             <p class="boldFont">
                                 Personal account №
                                 :
                             </p>
                             <br>
-                            <p th:text="${user.id}"> </p>
+                            <p th:text="${session.user.id}"></p>
                             <br>
                             <p class="boldFont">
                                 Email
                                 :
                             </p>
                             <br>
-                            <p th:text="${user.username}"> </p>
+                            <p th:text="${session.user.username}"></p>
                             <br>
                             <p class="boldFont">
                                 Wallet
                                 :
                             </p>
                             <br>
-                            <p th:text="${user.wallet}">  USD</p>
+                            <p th:text="${session.user.wallet}"> USD</p>
                             <br>
                             <p class="boldFont">
                                 Status
                                 :
                             </p>
                             <br>
-                            <p class="stoppedStatus" th:if="${user.statuses.get(0).getId() == 2}">Blocked</p>
+                            <p class="stoppedStatus" th:if="${!session.user.status}">Blocked</p>
                             <br>
-                            <p class="activeStatus" th:if="${user.statuses.get(0).getId() == 1}">Active</p>
+                            <p class="activeStatus" th:if="${session.user.status}">Active</p>
                         </div>
                         <div class="serviceBlock" id="clientMainPageBlock2">
                             <h4>
                                 My tariffs
                             </h4>
-                            <table class="tableService" id="subService">
-                                <thead>
-                                <tr>
-                                    <th>
-                                        Name
-                                    </th>
-                                    <th>
-                                        Status
-                                    </th>
-                                    <th>
-                                        Sub Day
-                                    </th>
-                                    <th>
-                                        Next Bill
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr class="highlight" th:each="item : ${tariffs}">
-                                    <td th:text="${item.name}"></td>
-                                    <td th:if="${!item.tariffStatus}">
-
-                                        <p class="stoppedStatus">
-                                            Stopped
-                                        </p>
-                                    </td>
-                                    <td th:if="${item.tariffStatus}">
-                                        <p class="activeStatus">
-                                            Active
-                                        </p>
-                                    </td>
-                                    <td th:text="${item.subDate}"></td>
-                                    <td th:if="${item.nextBill} != null" th:text="${item.nextBill}">
-                                    </td>
-                                    <td th:if="${item.nextBill} == null">
-                                        No Date
-                                    </td>
-                                    <td class="endTdUserInfo" style="width: 50px">
-                                        <a class="deleteButton" id="moreBtn"
-                                           href="${pageContext.request.contextPath}/view/client/mainPageUser?command=more&Tid=${item.key.id}">
-                                            More
-                                        </a>
-                                    </td>
-                                    <td class="endTdUserInfo" style="width: 50px">
-                                        <a class="deleteButton"
-                                           href="${pageContext.request.contextPath}/view/client/paymentSystemPage?command=payForTariff&id=${item.key.id}&price=${item.key.price}">
-                                            Pay
-                                        </a>
-                                    </td>
-                                    <td class="endTdUserInfo" style="width: 50px">
-                                        <a class="deleteButton"
-                                           href="${pageContext.request.contextPath}/view/client/mainPageUser?command=unsubscribe&id=${item.key.id}"
-                                        >Unsubscribe</a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-<!--                            <h4 style="margin: 50px 0 0 0; color: red" th:if="${failPay}">-->
-<!--                                Pay for tariff is failed. Maybe you blocked or insufficient funds on balance-->
-<!--                            </h4>-->
-<!--                            <h4 style="margin: 50px 0 0 0" th:if="${emptyTariffs}">-->
-<!--                                For service subscription go to "Service" page-->
-<!--                            </h4>-->
-
-                            <div class="serviceBlock" style="width: 50%" th:if="${showTariff}">
-                                <h4>
-                                    Tariff info
-                                </h4>
-                                <table class="tableService sortable">
+                            <div th:if="${!showTariff}">
+                                <table class="tableService" id="subService">
                                     <thead>
                                     <tr>
-                                        <th class="sorttable_alpha">
+                                        <th>
                                             Name
                                         </th>
-                                        <th class="sorttable_alpha">
-                                            Description
+                                        <th>
+                                            Status
                                         </th>
-                                        <th class="sorttable_numeric">
-                                            Price
+                                        <th>
+                                            Sub Day
+                                        </th>
+                                        <th>
+                                            Next Bill
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="highlight">
-                                        <td>${tariff.name}</td>
-                                        <td>
-                                            <div id="descDiv">${tariff.description}</div>
+
+                                    <tr class="highlight" th:each="item : ${tariffs}">
+                                        <td th:text="${item.name}"></td>
+                                        <td th:if="${!item.tariffStatus}">
+
+                                            <p class="stoppedStatus">
+                                                Stopped
+                                            </p>
                                         </td>
-                                        <td>${tariff.price}</td>
+                                        <td th:if="${item.tariffStatus}">
+                                            <p class="activeStatus">
+                                                Active
+                                            </p>
+                                        </td>
+                                        <td th:text="${item.subDate}"></td>
+                                        <td th:if="${item.nextBill} != null" th:text="${item.nextBill}">
+                                        </td>
+                                        <td th:if="${item.nextBill} == null">
+                                            No Date
+                                        </td>
+                                        <td class="endTdUserInfo" style="width: 50px">
+                                            <a class="deleteButton" id="moreBtn"
+                                               th:href="@{/more(tariffId=${item.id})}">
+                                                More
+                                            </a>
+                                        </td>
+                                        <td class="endTdUserInfo" style="width: 50px">
+                                            <form th:action="@{/clientPage(service=${item.id}, val=${item.price})}"
+                                                  method="POST">
+                                                <button class="deleteButton" type="submit"
+                                                        th:text="#{lang.pay1}"></button>
+                                            </form>
+                                        </td>
+                                        <td class="endTdUserInfo" style="width: 50px">
+                                            <form th:action="@{/unsubscribe(service=${item.id})}"
+                                                  method="POST">
+                                                <button class="deleteButton" type="submit"
+                                                        th:text="#{lang.unsubscribe}"></button>
+                                            </form>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
+
+                                <!--                            <h4 style="margin: 50px 0 0 0; color: red" th:if="${failPay}">-->
+                                <!--                                Pay for tariff is failed. Maybe you blocked or insufficient funds on balance-->
+                                <!--                            </h4>-->
+                                <!--                            <h4 style="margin: 50px 0 0 0" th:if="${emptyTariffs}">-->
+                                <!--                                For service subscription go to "Service" page-->
+                                <!--                            </h4>-->
+                            </div>
+                            <div th:if="${showTariff}">
+                                <div class="serviceBlock" style="width: 50%">
+                                    <h4>
+                                        Tariff info
+                                    </h4>
+                                    <table class="tableService sortable">
+                                        <thead>
+                                        <tr>
+                                            <th class="sorttable_alpha">
+                                                Name
+                                            </th>
+                                            <th class="sorttable_alpha">
+                                                Description
+                                            </th>
+                                            <th class="sorttable_numeric">
+                                                Price
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="highlight">
+                                            <td th:text="${tariff.name}"></td>
+                                            <td>
+                                                <div id="descDiv" th:text="${tariff.description}"></div>
+                                            </td>
+                                            <td th:text="${tariff.price}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

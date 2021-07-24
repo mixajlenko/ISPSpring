@@ -53,10 +53,10 @@ public class HomeController {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserById(principal.getId());
 
-        if(user.getStatuses().get(0).getName().equals("STATUS_BLOCKED")){
-            model.addAttribute("blo", true);
-            return "login";
-        }
+//        if(!user.isStatus()){
+//            model.addAttribute("blo", true);
+//            return "login";
+//        }
         if (role.contains("ROLE_ADMIN")) {
             return "redirect:/adminPage";
         } else {

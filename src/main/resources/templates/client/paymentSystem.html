@@ -92,7 +92,7 @@
                                         <label><input placeholder="0 USD" th:field="*{bill}"/></label>
                                     </p>
                                     <input class="btn" id="payBtn" type="submit"
-                                           th:value="#{lang.yourFunds}">
+                                           th:value="#{lang.pay1}">
                                 </form>
                             </div>
 
@@ -117,8 +117,8 @@
                                         </td>
                                         <td th:text="${item.bill}"></td>
                                         <td th:text="${item.balance}"></td>
-                                        <td th:if="${item.type == 'Pay'}" th:text="#{lang.typeTable1}"></td>
-                                        <td th:if="${item.type == 'Pay for svc'}" th:text="#{lang.typeTable2}"></td>
+                                        <td th:if="${item.type == 'refund'}" th:text="#{lang.typeTable1}"></td>
+                                        <td th:if="${item.type == 'payService'}" th:text="#{lang.typeTable2}"></td>
                                     </tr>
                                     </tbody>
                                 </table>

@@ -40,8 +40,8 @@ public class AdminController {
     @GetMapping("/adminPage")
     public String userList(Model model) {
         model.addAttribute("allUsers", (int) userService.allUsers().stream().filter(u -> u.getId() != 1).count());
-        model.addAttribute("blocked", (int) userService.findUsersByStatus(1L).stream().filter(u -> u.getId() != 1).count());
-        model.addAttribute("unlocked", (int) userService.findUsersByStatus(2L).stream().filter(u -> u.getId() != 1).count());
+//        model.addAttribute("blocked", (int) userService.findUsersByStatusFalse().stream().filter(u -> u.getId() != 1).count());
+//        model.addAttribute("unlocked", (int) userService.findUsersByStatusTrue().stream().filter(u -> u.getId() != 1).count());
         return "admin/adminPage";
     }
 

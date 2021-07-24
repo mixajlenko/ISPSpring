@@ -1,7 +1,6 @@
 package com.mixajlenko.ispspring.service;
 
 import com.mixajlenko.ispspring.entity.Role;
-import com.mixajlenko.ispspring.entity.Status;
 import com.mixajlenko.ispspring.entity.User;
 import com.mixajlenko.ispspring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,6 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     RoleRepository roleRepository;
-
-    @Autowired
-    StatusRepository statusRepository;
 
     @Autowired
     PaymentRepository paymentRepository;
@@ -49,23 +45,20 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public List<User> findUsersByStatus(Long statusId) {
-        List<User> userFromDb = userRepository.findAllByStatusesId(statusId);
-        return userFromDb;
-    }
+//    public List<User> findUsersByStatusTrue() {
+//        return userRepository.findAllByStatusIsTrue();
+//    }
+//
+//    public List<User> findUsersByStatusFalse() {
+//        return userRepository.findAllByStatusIsFalse();
+//    }
 
     @Transactional
     public boolean manageUserStatus(Long userId, int command) {
 
         User user = userRepository.getById(userId);
 
-        if (command == 1) {
-            user.setStatuses(new Status(1L, "STATUS_BLOCKED"));
-        } else {
-            user.setStatuses(new Status(2L, "STATUS_UNBLOCKED"));
-
-        }
-
+        user.setStatus(command != 1);
         userRepository.save(user);
 
         return true;
@@ -87,7 +80,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        user.setStatuses(new Status(1L, "STATUS_BLOCKED"));
+        user.setStatus(false);
         user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);

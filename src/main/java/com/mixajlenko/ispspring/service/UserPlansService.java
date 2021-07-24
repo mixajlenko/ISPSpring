@@ -51,15 +51,26 @@ public class UserPlansService {
 
         for (UserPlans u : userPlansRepository.findAllByUserId(id)) {
             TariffInfoForClientDTO tt = TariffInfoForClientDTO.builder()
+                    .id(u.getTariff().getId())
                     .name(u.getTariff().getName())
                     .tariffStatus(u.isStatus())
                     .nextBill(u.getNextBill())
                     .subDate(u.getSubDate())
+                    .price(u.getTariff().getPrice())
                     .build();
             tar.add(tt);
         }
         return tar;
     }
 
+
+    public boolean deleteTariff(Long userId, Long tariffId) {
+        long id = userPlansRepository.findByUserIdAndTariffId(userId, tariffId).getId();
+        if (id!=0) {
+            userPlansRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 
 }

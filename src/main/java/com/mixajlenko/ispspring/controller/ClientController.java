@@ -49,8 +49,8 @@ public class ClientController {
     public String clientPage(Model model, HttpServletRequest request) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         request.getSession().setAttribute("services", serviceRepository.findAll());
+        request.getSession().setAttribute("user", userService.findUserById(((User) principal).getId()));
         model.addAttribute("tariffs", userPlansService.tariffsByUser(((User) principal).getId()));
-        model.addAttribute("user", userService.findUserById(((User) principal).getId()));
         model.addAttribute("showTariff", false);
         return "/client/clientPage";
     }
@@ -69,6 +69,13 @@ public class ClientController {
     public String payment(@ModelAttribute("payment") Payment payment) {
         paymentService.savePayment(payment);
         return "redirect:/paymentSystem";
+    }
+
+    @PostMapping("/clientPage")
+    public String payService(@RequestParam(value = "service") Long service,@RequestParam(value = "val") Integer val,Model model) {
+        paymentService.payService(service, val);
+        model.addAttribute("showTariff", false);
+        return "redirect:/clientPage";
     }
 
     @GetMapping("/manage")
@@ -160,7 +167,7 @@ public class ClientController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserById(((User) principal).getId());
 
-        if (user.getStatuses().get(0).getId() != 2) {
+        if (!user.isStatus()) {
             model.addAttribute("subFail", true);
         } else {
 //            if (user.getTariffs().stream().anyMatch(t -> t.getId() == Long.parseLong(tariffId))) {
@@ -178,6 +185,23 @@ public class ClientController {
         model.addAttribute("tariffs", tariffService.sort(service, sort));
         model.addAttribute("showTariffs", true);
         return "client/servicePageClient";
+    }
+
+    @PostMapping("/unsubscribe")
+    public String unsubscribeTariff(@RequestParam("service") Long service) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserById(((User) principal).getId());
+
+        userPlansService.deleteTariff(user.getId(), service);
+
+        return "redirect:/clientPage";
+    }
+
+    @GetMapping("/more")
+    public String moreTariffInfo(@RequestParam("tariffId") Long tariffId, Model model){
+        model.addAttribute("showTariff", true);
+        model.addAttribute("tariff", tariffService.findTariffById(tariffId));
+        return "client/clientPage";
     }
 
 }

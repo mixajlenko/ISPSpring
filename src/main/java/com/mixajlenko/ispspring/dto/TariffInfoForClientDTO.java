@@ -14,6 +14,8 @@ import java.sql.Date;
 @NoArgsConstructor
 public class TariffInfoForClientDTO {
 
+    private Long id;
+
     private String name;
 
     private boolean tariffStatus;
@@ -21,5 +23,9 @@ public class TariffInfoForClientDTO {
     private Date nextBill;
 
     private  Date subDate;
+
+    private int price;
+
+    private String description;
 
 }
