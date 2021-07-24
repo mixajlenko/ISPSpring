@@ -1,5 +1,6 @@
 package com.mixajlenko.ispspring.repository;
 
+import com.mixajlenko.ispspring.dto.TariffsByServiceDto;
 import com.mixajlenko.ispspring.entity.Payment;
 import com.mixajlenko.ispspring.entity.Tariff;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,17 @@ import java.util.List;
 public interface TariffRepository extends JpaRepository<Tariff, Long> {
 
     Tariff findByName(String name);
+
+
+    List<Tariff> findTariffBySvcId(Long id);
+
+
+    List<Tariff> findTariffBySvcIdOrderByNameDesc(Long id);
+
+
+
+//    List<Tariff> findAllByUsersId(Long id);
+
+
 
 }

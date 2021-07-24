@@ -19,13 +19,18 @@
             <div class="mainmenu">
                 <ul class="topChange">
                     <li><a class="btn" href="/clientPage" th:text="#{lang.mainPage}"></a></li>
-                    <li><a class="btn" href="/servicePageClient" th:text="#{lang.serviceMenu}"><i
-                            class="fa fa-angle-down"></i></a>
-                        <!--                        <ul class="subChange" th:each="svc : ${services}">-->
-                        <!--                                <li>-->
-                        <!--                                  <a href="/view/client/servicePage?item=${svc.name}&serviceId=${item.id}"><span th:text="${svc.name}"></span></a>-->
-                        <!--                                </li>-->
-                        <!--                        </ul>-->
+                    <li><a class="btn" href="/servicePageClient"  th:text="#{lang.serviceMenu}">
+                        <i class="fa fa-angle-down"></i></a>
+
+                        <ul class="subChange" >
+                            <li class="serviceListMenu" th:each="service : ${session.services}">
+                                <div th:if="${service.name} != 'Complex'">
+                                    <a th:href="@{/servicePageClient(service=${service.id})}"><span
+                                            th:text="${service.name}"></span></a>
+                                </div>
+                            </li>
+                        </ul>
+
                     </li>
                     <li><a class="btn" href="/paymentSystem" th:text="#{lang.payments}"></a></li>
                     <li><a class="btn"

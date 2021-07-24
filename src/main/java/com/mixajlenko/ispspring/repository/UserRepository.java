@@ -1,6 +1,7 @@
 package com.mixajlenko.ispspring.repository;
 
 import com.mixajlenko.ispspring.entity.Status;
+import com.mixajlenko.ispspring.entity.Tariff;
 import com.mixajlenko.ispspring.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

@@ -1,5 +1,6 @@
 package com.mixajlenko.ispspring.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,32 +10,38 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "t_payment")
-public class Payment {
+@Table(name="t_user_tariffs")
+public class UserPlans {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="user_id", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    private int bill;
+    @ManyToOne
+    @JoinColumn(name = "tariff_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Tariff tariff;
 
-    private int status;
+    @Column(name="next_bill")
+    private Date nextBill;
 
-    private int balance;
+    @Column(name="sub_date")
+    private Date subDate;
 
-    private String type;
 
-    private Date date;
+    private boolean status;
+
 
 }

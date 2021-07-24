@@ -3,12 +3,8 @@ package com.mixajlenko.ispspring.service;
 import com.mixajlenko.ispspring.entity.Role;
 import com.mixajlenko.ispspring.entity.Status;
 import com.mixajlenko.ispspring.entity.User;
-import com.mixajlenko.ispspring.repository.PaymentRepository;
-import com.mixajlenko.ispspring.repository.RoleRepository;
-import com.mixajlenko.ispspring.repository.StatusRepository;
-import com.mixajlenko.ispspring.repository.UserRepository;
+import com.mixajlenko.ispspring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,15 +12,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.*;
 
 @Service
 public class UserService implements UserDetailsService {
 
-    //    @PersistenceContext
-//    private EntityManager entityManager;
     @Autowired
     UserRepository userRepository;
 
@@ -36,6 +28,12 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     PaymentRepository paymentRepository;
+
+    @Autowired
+    TariffRepository tariffRepository;
+
+    @Autowired
+    UserPlansRepository userPlansRepository;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -111,10 +109,5 @@ public class UserService implements UserDetailsService {
         }
         return false;
     }
-
-//    public List<User> usergtList(Long idMin) {
-//        return entityManager.createQuery("SELECT u FROM User u WHERE u.id > :paramId", User.class)
-//                .setParameter("paramId", idMin).getResultList();
-//    }
 
 }

@@ -2,17 +2,21 @@ package com.mixajlenko.ispspring.entity;
 
 import lombok.*;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.*;
 import java.util.Set;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "t_user")
@@ -35,15 +39,18 @@ public class User implements UserDetails {
 
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
 
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Status> statuses;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Tariff> tariffs;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    private Set<Tariff> tariffs;
 
     @NotBlank(message = "First name is mandatory")
     @Size(min = 2, message = "{lang.firstNameError}")
@@ -58,34 +65,6 @@ public class User implements UserDetails {
 
     private int wallet;
 
-    public User() {
-
-    }
-
-    public User(Long id, String username, String password, Set<Role> roles, List<Status> statuses, Set<Tariff> tariffs, String firstName, String secondName, String phone, int wallet) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-        this.statuses = statuses;
-        this.tariffs = tariffs;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.phone = phone;
-        this.wallet = wallet;
-    }
-
-    public User(Long id, String username, String password, Set<Role> roles, List<Status> statuses, String firstName, String secondName, String phone, int wallet) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-        this.statuses = statuses;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.phone = phone;
-        this.wallet = wallet;
-    }
 
     public void setStatuses(Status status) {
         this.statuses = new ArrayList<>();

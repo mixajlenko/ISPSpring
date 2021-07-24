@@ -2,6 +2,8 @@ package com.mixajlenko.ispspring.entity;
 
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,6 +21,7 @@ public class Status {
 
     @Transient
     @ManyToMany(mappedBy = "status", fetch=FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<User> users;
 
     public Status() {

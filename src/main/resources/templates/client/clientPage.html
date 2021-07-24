@@ -19,12 +19,18 @@
             <div class="mainmenu">
                 <ul class="topChange">
                     <li><a class="btn" href="/clientPage" th:text="#{lang.mainPage}"></a></li>
-                    <li><a class="btn" href="/servicePageClient" th:text="#{lang.serviceMenu}"><i class="fa fa-angle-down"></i></a>
-                        <!--                        <ul class="subChange" th:each="service : ${services}">-->
-                        <!--                                <li>-->
-                        <!--                                  <a href="/view/client/servicePage?item=${service.name}&serviceId=${item.id}"><span th:text="${service.name}"></span></a>-->
-                        <!--                                </li>-->
-                        <!--                        </ul>-->
+                    <li><a class="btn" href="/servicePageClient" th:text="#{lang.serviceMenu}">
+                        <i class="fa fa-angle-down"></i></a>
+
+                        <ul class="subChange">
+                            <li class="serviceListMenu" th:each="service : ${session.services}">
+                                <div th:if="${service.name} != 'Complex'">
+                                    <a th:href="@{/servicePageClient(service=${service.id})}"><span
+                                            th:text="${service.name}"></span></a>
+                                </div>
+                            </li>
+                        </ul>
+
                     </li>
                     <li><a class="btn" href="/paymentSystem" th:text="#{lang.payments}"></a></li>
                     <li><a class="btn"
@@ -82,157 +88,152 @@
                         </div>
                     </div>
                     <div class="mainPageBlocks">
-                        <!--                        <c:if test="${!showTariff}">-->
-                        <!--                            <div class="serviceBlock" id="clientMainPageBlock1">-->
-                        <!--                                <h4>-->
-                        <!--                                  Profile info-->
-                        <!--                                </h4>-->
-                        <!--                                <p class="boldFont">-->
-                        <!--                                  Name :-->
-                        <!--                                </p>-->
-                        <!--                                <br>-->
-                        <!--                                <p>${user.firstName} ${user.secondName}</p>-->
-                        <!--                                <br>-->
-                        <!--                                <p class="boldFont">-->
-                        <!--                                  Personal account №-->
-                        <!--                                    :-->
-                        <!--                                </p>-->
-                        <!--                                <br>-->
-                        <!--                                <p> ${user.id}</p>-->
-                        <!--                                <br>-->
-                        <!--                                <p class="boldFont">-->
-                        <!--                                    Email-->
-                        <!--                                    :-->
-                        <!--                                </p>-->
-                        <!--                                <br>-->
-                        <!--                                <p> ${user.email}</p>-->
-                        <!--                                <br>-->
-                        <!--                                <p class="boldFont">-->
-                        <!--                                    Wallet-->
-                        <!--                                    :-->
-                        <!--                                </p>-->
-                        <!--                                <br>-->
-                        <!--                                <p> ${user.wallet} USD</p>-->
-                        <!--                                <br>-->
-                        <!--                                <p class="boldFont">-->
-                        <!--                                    Status-->
-                        <!--                                    :-->
-                        <!--                                </p>-->
-                        <!--                                <br>-->
-                        <!--                                <c:if test="${user.status == 0}">-->
-                        <!--                                    <p class="stoppedStatus">Blocked</p>-->
-                        <!--                                    <br>-->
-                        <!--                                </c:if>-->
-                        <!--                                <c:if test="${user.status == 1}">-->
-                        <!--                                    <p class="activeStatus">Active</p>-->
-                        <!--                                </c:if>-->
-                        <!--                            </div>-->
-                        <!--                            <div class="serviceBlock" id="clientMainPageBlock2">-->
-                        <!--                                <h4>-->
-                        <!--                                  My tariffs-->
-                        <!--                                </h4>-->
-                        <!--                                <table class="tableService" id="subService">-->
-                        <!--                                    <thead>-->
-                        <!--                                    <tr>-->
-                        <!--                                        <th>-->
-                        <!--                                            Name-->
-                        <!--                                        </th>-->
-                        <!--                                        <th>-->
-                        <!--                                            Status-->
-                        <!--                                        </th>-->
-                        <!--                                        <th>-->
-                        <!--                                            Next Bill-->
-                        <!--                                        </th>-->
-                        <!--                                    </tr>-->
-                        <!--                                    </thead>-->
-                        <!--                                    <tbody>-->
-                        <!--                                    <c:forEach items="${userTariffs}" var="item">-->
-                        <!--                                        <tr class="highlight">-->
-                        <!--                                            <td><p>${item.key.name}</p></td>-->
-                        <!--                                            <td>-->
-                        <!--                                                <c:if test="${item.value.status == 0}">-->
-                        <!--                                                    <p class="stoppedStatus">-->
-                        <!--                                                        Stopped-->
-                        <!--                                                    </p>-->
-                        <!--                                                </c:if>-->
-                        <!--                                                <c:if test="${item.value.status == 1}">-->
-                        <!--                                                    <p class="activeStatus">-->
-                        <!--                                                        Active-->
-                        <!--                                                    </p>-->
-                        <!--                                                </c:if>-->
-                        <!--                                            </td>-->
-                        <!--                                            <td>-->
-                        <!--                                                <p>${item.value.nextBill}</p>-->
-                        <!--                                            </td>-->
-                        <!--                                            <td class="endTdUserInfo" style="width: 50px">-->
-                        <!--                                                <a class="deleteButton" id="moreBtn"-->
-                        <!--                                                   href="${pageContext.request.contextPath}/view/client/mainPageUser?command=more&Tid=${item.key.id}">-->
-                        <!--                                                    More-->
-                        <!--                                                </a>-->
-                        <!--                                            </td>-->
-                        <!--                                            <td class="endTdUserInfo" style="width: 50px">-->
-                        <!--                                                <a class="deleteButton"-->
-                        <!--                                                   href="${pageContext.request.contextPath}/view/client/paymentSystemPage?command=payForTariff&id=${item.key.id}&price=${item.key.price}">-->
-                        <!--                                                    Pay-->
-                        <!--                                                </a>-->
-                        <!--                                            </td>-->
-                        <!--                                            <td class="endTdUserInfo" style="width: 50px">-->
-                        <!--                                                <a class="deleteButton"-->
-                        <!--                                                   href="${pageContext.request.contextPath}/view/client/mainPageUser?command=unsubscribe&id=${item.key.id}"-->
-                        <!--                                                >Unsubscribe</a>-->
-                        <!--                                            </td>-->
-                        <!--                                        </tr>-->
-                        <!--                                    </c:forEach>-->
-                        <!--                                    </tbody>-->
-                        <!--                                </table>-->
-                        <!--                        </c:if>-->
-                        <!--                        <c:if test="${failPay}">-->
-                        <!--                            <h4 style="margin: 50px 0 0 0; color: red">-->
-                        <!--                              Pay for tariff is failed. Maybe you blocked or insufficient funds on balance-->
-                        <!--                            </h4>-->
-                        <!--                        </c:if>-->
-                        <!--                        <c:if test="${emptyTariffs}">-->
-                        <!--                            <h4 style="margin: 50px 0 0 0">-->
-                        <!--                              For service subscription go to "Service" page-->
-                        <!--                            </h4>-->
-                        <!--                        </c:if>-->
-                        <!--                        <c:if test="${showTariff}">-->
-                        <!--                            <div class="serviceBlock" style="width: 50%">-->
-                        <!--                                <h4>-->
-                        <!--                                  Tariff info-->
-                        <!--                                </h4>-->
-                        <!--                                <table class="tableService sortable">-->
-                        <!--                                    <thead>-->
-                        <!--                                    <tr>-->
-                        <!--                                        <th class="sorttable_alpha">-->
-                        <!--                                            Name-->
-                        <!--                                        </th>-->
-                        <!--                                        <th class="sorttable_alpha">-->
-                        <!--                                          Description-->
-                        <!--                                        </th>-->
-                        <!--                                        <th class="sorttable_numeric">-->
-                        <!--                                          Price-->
-                        <!--                                        </th>-->
-                        <!--                                    </tr>-->
-                        <!--                                    </thead>-->
-                        <!--                                    <tbody>-->
-                        <!--                                    <tr class="highlight">-->
-                        <!--                                        <td>${tariff.name}</td>-->
-                        <!--                                        <td>-->
-                        <!--                                            <div id="descDiv">${tariff.description}</div>-->
-                        <!--                                        </td>-->
-                        <!--                                        <td>${tariff.price}</td>-->
-                        <!--                                    </tr>-->
-                        <!--                                    </tbody>-->
-                        <!--                                </table>-->
-                        <!--                            </div>-->
-                        <!--                        </c:if>-->
+                        <div class="serviceBlock" id="clientMainPageBlock1" th:if="${!showTariff}">
+                            <h4>
+                                Profile info
+                            </h4>
+                            <p class="boldFont">
+                                Name :
+                            </p>
+                            <br>
+                            <p th:text="${user.firstName}"></p>
+                            <p th:text="${user.secondName}"></p>
+                            <br>
+                            <p class="boldFont">
+                                Personal account №
+                                :
+                            </p>
+                            <br>
+                            <p th:text="${user.id}"> </p>
+                            <br>
+                            <p class="boldFont">
+                                Email
+                                :
+                            </p>
+                            <br>
+                            <p th:text="${user.username}"> </p>
+                            <br>
+                            <p class="boldFont">
+                                Wallet
+                                :
+                            </p>
+                            <br>
+                            <p th:text="${user.wallet}">  USD</p>
+                            <br>
+                            <p class="boldFont">
+                                Status
+                                :
+                            </p>
+                            <br>
+                            <p class="stoppedStatus" th:if="${user.statuses.get(0).getId() == 2}">Blocked</p>
+                            <br>
+                            <p class="activeStatus" th:if="${user.statuses.get(0).getId() == 1}">Active</p>
+                        </div>
+                        <div class="serviceBlock" id="clientMainPageBlock2">
+                            <h4>
+                                My tariffs
+                            </h4>
+                            <table class="tableService" id="subService">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th>
+                                        Sub Day
+                                    </th>
+                                    <th>
+                                        Next Bill
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr class="highlight" th:each="item : ${tariffs}">
+                                    <td th:text="${item.name}"></td>
+                                    <td th:if="${!item.tariffStatus}">
+
+                                        <p class="stoppedStatus">
+                                            Stopped
+                                        </p>
+                                    </td>
+                                    <td th:if="${item.tariffStatus}">
+                                        <p class="activeStatus">
+                                            Active
+                                        </p>
+                                    </td>
+                                    <td th:text="${item.subDate}"></td>
+                                    <td th:if="${item.nextBill} != null" th:text="${item.nextBill}">
+                                    </td>
+                                    <td th:if="${item.nextBill} == null">
+                                        No Date
+                                    </td>
+                                    <td class="endTdUserInfo" style="width: 50px">
+                                        <a class="deleteButton" id="moreBtn"
+                                           href="${pageContext.request.contextPath}/view/client/mainPageUser?command=more&Tid=${item.key.id}">
+                                            More
+                                        </a>
+                                    </td>
+                                    <td class="endTdUserInfo" style="width: 50px">
+                                        <a class="deleteButton"
+                                           href="${pageContext.request.contextPath}/view/client/paymentSystemPage?command=payForTariff&id=${item.key.id}&price=${item.key.price}">
+                                            Pay
+                                        </a>
+                                    </td>
+                                    <td class="endTdUserInfo" style="width: 50px">
+                                        <a class="deleteButton"
+                                           href="${pageContext.request.contextPath}/view/client/mainPageUser?command=unsubscribe&id=${item.key.id}"
+                                        >Unsubscribe</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+<!--                            <h4 style="margin: 50px 0 0 0; color: red" th:if="${failPay}">-->
+<!--                                Pay for tariff is failed. Maybe you blocked or insufficient funds on balance-->
+<!--                            </h4>-->
+<!--                            <h4 style="margin: 50px 0 0 0" th:if="${emptyTariffs}">-->
+<!--                                For service subscription go to "Service" page-->
+<!--                            </h4>-->
+
+                            <div class="serviceBlock" style="width: 50%" th:if="${showTariff}">
+                                <h4>
+                                    Tariff info
+                                </h4>
+                                <table class="tableService sortable">
+                                    <thead>
+                                    <tr>
+                                        <th class="sorttable_alpha">
+                                            Name
+                                        </th>
+                                        <th class="sorttable_alpha">
+                                            Description
+                                        </th>
+                                        <th class="sorttable_numeric">
+                                            Price
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="highlight">
+                                        <td>${tariff.name}</td>
+                                        <td>
+                                            <div id="descDiv">${tariff.description}</div>
+                                        </td>
+                                        <td>${tariff.price}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>

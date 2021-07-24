@@ -1,6 +1,8 @@
 package com.mixajlenko.ispspring.entity;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -20,6 +22,7 @@ public class Role implements GrantedAuthority {
 
     @Transient
     @ManyToMany(mappedBy = "role", fetch=FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<User> users;
 
     public Role() {

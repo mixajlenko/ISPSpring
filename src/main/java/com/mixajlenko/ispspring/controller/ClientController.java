@@ -1,13 +1,14 @@
 package com.mixajlenko.ispspring.controller;
 
 import com.mixajlenko.ispspring.entity.Payment;
-import com.mixajlenko.ispspring.entity.Svc;
 import com.mixajlenko.ispspring.entity.Tariff;
 import com.mixajlenko.ispspring.entity.User;
 import com.mixajlenko.ispspring.repository.ServiceRepository;
 import com.mixajlenko.ispspring.repository.TariffRepository;
 import com.mixajlenko.ispspring.repository.UserRepository;
 import com.mixajlenko.ispspring.service.PaymentService;
+import com.mixajlenko.ispspring.service.TariffService;
+import com.mixajlenko.ispspring.service.UserPlansService;
 import com.mixajlenko.ispspring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
@@ -36,8 +39,19 @@ public class ClientController {
     @Autowired
     TariffRepository tariffRepository;
 
+    @Autowired
+    TariffService tariffService;
+
+    @Autowired
+    UserPlansService userPlansService;
+
     @GetMapping("/clientPage")
-    public String clientPage() {
+    public String clientPage(Model model, HttpServletRequest request) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.getSession().setAttribute("services", serviceRepository.findAll());
+        model.addAttribute("tariffs", userPlansService.tariffsByUser(((User) principal).getId()));
+        model.addAttribute("user", userService.findUserById(((User) principal).getId()));
+        model.addAttribute("showTariff", false);
         return "/client/clientPage";
     }
 
@@ -122,19 +136,47 @@ public class ClientController {
     }
 
     @GetMapping("/supportPage")
-    public String supportPage(){
+    public String supportPage() {
         return "client/supportPage";
     }
 
 
     @GetMapping("/servicePageClient")
-    public String servicePage(Model model) {
-        List<Svc> svcs = serviceRepository.findAll();
-        List<Tariff> tariffs = tariffRepository.findAll();
+    public String servicePage(@RequestParam(value = "service", required = false) Long service, Model model) {
         List<Tariff> complex = tariffRepository.findAll().stream().filter(t -> t.getName().contains("Plan")).collect(Collectors.toList());
-        model.addAttribute("services", svcs);
-        model.addAttribute("tariffs", tariffs);
+        System.out.println(service);
+        if (Objects.nonNull(service)) {
+            model.addAttribute("tariffs", tariffService.allTariffsBySvcId(service));
+            model.addAttribute("showTariffs", true);
+            model.addAttribute("serviceId", service);
+        }
         model.addAttribute("complex", complex);
+        return "client/servicePageClient";
+    }
+
+    @PostMapping("/subscribe")
+    public String tariffSubscription(@RequestParam(value = "tariffId") String tariffId, Model model) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserById(((User) principal).getId());
+
+        if (user.getStatuses().get(0).getId() != 2) {
+            model.addAttribute("subFail", true);
+        } else {
+//            if (user.getTariffs().stream().anyMatch(t -> t.getId() == Long.parseLong(tariffId))) {
+//                model.addAttribute("alreadyExistTariff", true);
+//                model.addAttribute("subSuccess", false);
+//            } else {
+                userPlansService.addUserTariff(user.getId(), Long.valueOf(tariffId));
+                model.addAttribute("subSuccess", true);
+            }
+        return "redirect:/servicePageClient";
+    }
+
+    @GetMapping("/sort")
+    public String sort(@RequestParam("sort") String sort, @RequestParam("service") Long service, Model model) {
+        model.addAttribute("tariffs", tariffService.sort(service, sort));
+        model.addAttribute("showTariffs", true);
         return "client/servicePageClient";
     }
 

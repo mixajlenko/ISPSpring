@@ -427,6 +427,10 @@ input.tariff1 {
     transform: scaleY(1);
 }
 
+.serviceListMenu{
+    display: table;
+}
+
 .subChange li {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -681,9 +685,11 @@ span.validationError {
     width: 80%;
     margin: auto;
     min-height: 600px;
+    padding: 20px;
 }
 
 .plansList {
+    display: inline-block;
 }
 
 .singePlan {

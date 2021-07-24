@@ -1,11 +1,21 @@
 package com.mixajlenko.ispspring.entity;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.Set;
 
+
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "t_tariff")
@@ -21,51 +31,25 @@ public class Tariff {
 
     private int price;
 
-    @Transient
+//    @Transient
+//    private int tariffStatus;
+//
+//    @Transient
+//    private Date nextBill;
+//
+//    @Transient
+//    private Date subDate;
+
+
     @ManyToOne(fetch=FetchType.EAGER)
     private Svc svc;
 
-    @Transient
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<User> users;
 
-    public Tariff() {
-    }
 
-    public Tariff(String name, String description, int price) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-    }
 
-    public Tariff(String name, String description, int price, Svc svc) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.svc = svc;
-    }
-
-    public Tariff(String name, String description, int price, Svc svc, Set<User> users) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.svc = svc;
-        this.users = users;
-    }
-
-    public Tariff(Long id, String name, String description, int price) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-    }
-
-    public Tariff(Long id, String name, String description, int price, Svc svc, Set<User> users) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.svc = svc;
-        this.users = users;
-    }
+//    @Transient
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    private Set<User> users;
+//
 }
