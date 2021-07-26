@@ -184,6 +184,7 @@ public class ClientController {
     public String sort(@RequestParam("sort") String sort, @RequestParam("service") Long service, Model model) {
         model.addAttribute("tariffs", tariffService.sort(service, sort));
         model.addAttribute("showTariffs", true);
+        model.addAttribute("serviceId", service);
         return "client/servicePageClient";
     }
 

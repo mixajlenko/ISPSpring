@@ -347,9 +347,11 @@ input.tariff1 {
 }
 
 .planText {
+
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all 1.5s ease-in-out;
 }
 
 .plan:hover {
@@ -362,6 +364,9 @@ input.tariff1 {
 }
 
 .planInfo{
+    width: -webkit-fill-available;
+    border: none;
+    background: none;
     display: flex;
     opacity: 0;
     justify-content: center;

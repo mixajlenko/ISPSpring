@@ -19,6 +19,10 @@ public interface TariffRepository extends JpaRepository<Tariff, Long> {
 
     List<Tariff> findTariffBySvcIdOrderByNameDesc(Long id);
 
+    List<Tariff> findTariffBySvcIdOrderByNameAsc(Long id);
+
+    List<Tariff> findTariffBySvcIdOrderByPrice(Long id);
+
 
 
 //    List<Tariff> findAllByUsersId(Long id);

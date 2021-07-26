@@ -88,19 +88,46 @@ public class TariffService {
         switch (word) {
             case "name":
                 return sortByName(service);
-//            case "nameR":
-//                return sortByAuthor();
-//            case "price":
-//                return sortPublisher();
+            case "nameR":
+                return sortByNameR(service);
+            case "price":
+                return sortByPrice(service);
             default:
-//                return sortPublisherDate();
+                return sortByName(service);
         }
-        return Collections.emptyList();
     }
 
     private List<TariffsByServiceDto> sortByName(Long servId){
         List<TariffsByServiceDto> tar = new ArrayList<>();
+        for(Tariff t : tariffRepository.findTariffBySvcIdOrderByNameAsc(servId)){
+            TariffsByServiceDto tt = TariffsByServiceDto.builder()
+                    .id(t.getId())
+                    .name(t.getName())
+                    .description(t.getDescription())
+                    .price(t.getPrice())
+                    .build();
+            tar.add(tt);
+        }
+        return tar;
+    }
+
+    private List<TariffsByServiceDto> sortByNameR(Long servId){
+        List<TariffsByServiceDto> tar = new ArrayList<>();
         for(Tariff t : tariffRepository.findTariffBySvcIdOrderByNameDesc(servId)){
+            TariffsByServiceDto tt = TariffsByServiceDto.builder()
+                    .id(t.getId())
+                    .name(t.getName())
+                    .description(t.getDescription())
+                    .price(t.getPrice())
+                    .build();
+            tar.add(tt);
+        }
+        return tar;
+    }
+
+    private List<TariffsByServiceDto> sortByPrice(Long servId){
+        List<TariffsByServiceDto> tar = new ArrayList<>();
+        for(Tariff t : tariffRepository.findTariffBySvcIdOrderByPrice(servId)){
             TariffsByServiceDto tt = TariffsByServiceDto.builder()
                     .id(t.getId())
                     .name(t.getName())
