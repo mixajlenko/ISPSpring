@@ -70,6 +70,20 @@ public class TariffService {
         return tariffDto;
     }
 
+    public List<TariffsByServiceDto> allTariffs(){
+        List<TariffsByServiceDto> tar = new ArrayList<>();
+        for(Tariff t : tariffRepository.findAll()){
+            TariffsByServiceDto tt = TariffsByServiceDto.builder()
+                    .id(t.getId())
+                    .name(t.getName())
+                    .description(t.getDescription())
+                    .price(t.getPrice())
+                    .build();
+            tar.add(tt);
+        }
+        return tar;
+    }
+
     public List<TariffsByServiceDto> allTariffsBySvcId(Long id){
         List<TariffsByServiceDto> tar = new ArrayList<>();
         for(Tariff t : tariffRepository.findTariffBySvcId(id)){

@@ -72,7 +72,7 @@ public class ClientController {
     }
 
     @PostMapping("/clientPage")
-    public String payService(@RequestParam(value = "service") Long service,@RequestParam(value = "val") Integer val,Model model) {
+    public String payService(@RequestParam(value = "service") Long service, @RequestParam(value = "val") Integer val, Model model) {
         paymentService.payService(service, val);
         model.addAttribute("showTariff", false);
         return "redirect:/clientPage";
@@ -151,12 +151,13 @@ public class ClientController {
     @GetMapping("/servicePageClient")
     public String servicePage(@RequestParam(value = "service", required = false) Long service, Model model) {
         List<Tariff> complex = tariffRepository.findAll().stream().filter(t -> t.getName().contains("Plan")).collect(Collectors.toList());
-        System.out.println(service);
         if (Objects.nonNull(service)) {
             model.addAttribute("tariffs", tariffService.allTariffsBySvcId(service));
             model.addAttribute("showTariffs", true);
-            model.addAttribute("serviceId", service);
+
+            model.addAttribute("serviceName", serviceRepository.getById(service).getName());
         }
+        model.addAttribute("serviceId", service);
         model.addAttribute("complex", complex);
         return "client/servicePageClient";
     }
@@ -174,9 +175,9 @@ public class ClientController {
 //                model.addAttribute("alreadyExistTariff", true);
 //                model.addAttribute("subSuccess", false);
 //            } else {
-                userPlansService.addUserTariff(user.getId(), Long.valueOf(tariffId));
-                model.addAttribute("subSuccess", true);
-            }
+            userPlansService.addUserTariff(user.getId(), Long.valueOf(tariffId));
+            model.addAttribute("subSuccess", true);
+        }
         return "redirect:/servicePageClient";
     }
 
@@ -199,10 +200,9 @@ public class ClientController {
     }
 
     @GetMapping("/more")
-    public String moreTariffInfo(@RequestParam("tariffId") Long tariffId, Model model){
+    public String moreTariffInfo(@RequestParam("tariffId") Long tariffId, Model model) {
         model.addAttribute("showTariff", true);
         model.addAttribute("tariff", tariffService.findTariffById(tariffId));
         return "client/clientPage";
     }
-
 }

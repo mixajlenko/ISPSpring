@@ -26,10 +26,10 @@
             <div class="mainmenu">
                 <ul class="topChange">
                     <li><a class="btn" href="/clientPage" th:text="#{lang.mainPage}"></a></li>
-                    <li><a class="btn" href="/servicePageClient"  th:text="#{lang.serviceMenu}">
+                    <li><a class="btn" href="/servicePageClient" th:text="#{lang.serviceMenu}">
                         <i class="fa fa-angle-down"></i></a>
 
-                        <ul class="subChange" >
+                        <ul class="subChange">
                             <li class="serviceListMenu" th:each="service : ${session.services}">
                                 <div th:if="${service.name} != 'Complex'">
                                     <a th:href="@{/servicePageClient(service=${service.id})}"><span
@@ -87,32 +87,46 @@
                         </div>
                     </div>
                     <div class="plansBlock">
-                        <div >
+                        <div>
                             <h4 th:text="#{lang.complex}"></h4>
+                            <div class="mainmenuSort">
+                                <ul class="topSort">
+                                    <li><a class="btnSort">Download list of all tariffs:</a>
+                                        <ul class="subSort">
+                                            <li>
+                                                <a th:href="@{/download(format= 'pdf', serviceId=${serviceId})}">PDF</a>
+                                            </li>
+                                            <li>
+                                                <a th:href="@{/download(format= 'txt', serviceId=${serviceId})} ">TXT</a>
+                                            </li>
+                                            <li>
+                                                <a th:href="@{/download(format= 'docx', serviceId=${serviceId})} ">DOCX</a>
+                                            </li>
+                                            <li>
+                                                <a th:href="@{/download(format= 'csv', serviceId=${serviceId})}">CSV</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
                             <div class="plansList singePlan" th:each="complexTariff : ${complex}">
 
                                 <form class="plan" th:action="@{/subscribe(tariffId=${complexTariff.id})}"
                                       method="post">
-                                    <p class="planText" id="subscribeButton" type="submit" th:text="${complexTariff.name}"></p>
+                                    <p class="planText" id="subscribeButton" type="submit"
+                                       th:text="${complexTariff.name}"></p>
                                     <button class="planInfo" th:text="${complexTariff.description}"></button>
 
-<!--                                <a class="plan"-->
-<!--                                   th:action="@{/subscribe(tariffId=${complexTariff.id})}">-->
+                                    <!--                                <a class="plan"-->
+                                    <!--                                   th:action="@{/subscribe(tariffId=${complexTariff.id})}">-->
                                     <!--                  onclick="return confirm('<fmt:message key="subscribeSubmit1"/> ${complexTariff.name} <fmt:message key="subscribeSubmit2"/>')"-->
-<!--                                    <p class="planText" th:text="${complexTariff.name}"></p>-->
-<!--                                    <p class="planInfo" th:text="${complexTariff.description}"></p>-->
+                                    <!--                                    <p class="planText" th:text="${complexTariff.name}"></p>-->
+                                    <!--                                    <p class="planInfo" th:text="${complexTariff.description}"></p>-->
                                 </form>
-<!--                                </a>-->
+                                <!--                                </a>-->
                             </div>
                         </div>
                         <div>
-                            Download all:
-                            <!--              <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=pdf&serviceName=All&serviceId=empty">PDF</a>-->
-                            <!--              <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=txt&serviceName=All&serviceId=empty">TXT</a>-->
-                            <!--              <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=docx&serviceName=All&serviceId=empty">DOCX</a>-->
-                            <!--              <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=csv&serviceName=All&serviceId=empty">CSV</a>-->
-                        </div>
-                        <div >
                             <h4 th:text="#{lang.single}"></h4>
                             <div class="plansList singePlan" th:each="item : ${session.services}">
                                 <a class="btn" id="serv"
@@ -175,11 +189,26 @@
                                             <!--                          onclick="return confirm('<fmt:message key="subscribeSubmit1"/> ${item.name} <fmt:message key="subscribeSubmit2"/>')"-->
                                         </td>
                                     </tr>
-                                    Download:
-                                    <!--                    <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=pdf&serviceId=${param.get("serviceId")}&serviceName=${param.get("item")}">PDF</a>-->
-                                    <!--                    <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=txt&serviceId=${param.get("serviceId")}&serviceName=${param.get("item")}">TXT</a>-->
-                                    <!--                    <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=docx&serviceId=${param.get("serviceId")}&serviceName=${param.get("item")}">DOCX</a>-->
-                                    <!--                    <a href="${pageContext.request.contextPath}/view/client/downloadServices?format=csv&serviceId=${param.get("serviceId")}&serviceName=${param.get("item")}">CSV</a>-->
+                                    <div class="mainmenuSort">
+                                        <ul class="topSort">
+                                            <li><a class="btnSort">Download list of <span th:text="${serviceName}"></span> tariffs:</a>
+                                                <ul class="subSort">
+                                                    <li>
+                                                        <a th:href="@{/download(format= 'pdf',serviceName=${serviceName}, serviceId=${serviceId})}">PDF</a>
+                                                    </li>
+                                                    <li>
+                                                        <a th:href="@{/download(format= 'txt', serviceName=${serviceName}, serviceId=${serviceId})} ">TXT</a>
+                                                    </li>
+                                                    <li>
+                                                        <a th:href="@{/download(format= 'docx', serviceName=${serviceName}, serviceId=${serviceId})} ">DOCX</a>
+                                                    </li>
+                                                    <li>
+                                                        <a th:href="@{/download(format= 'csv', serviceName=${serviceName}, serviceId=${serviceId})}">CSV</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
                                     </tbody>
                                 </table>
                             </div>
